@@ -10,7 +10,7 @@ const User = ({ currUser, setCurrUser }) => {
   if (currUser)
     return (
       <div>
-        WELCOME TO ZENEDHUB
+        Welcome to Courses Finder
         <br />
         {currUser.name}
         

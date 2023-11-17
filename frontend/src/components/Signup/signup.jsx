@@ -61,24 +61,36 @@ const Signup = ({ setCurrUser, setShow }) => {
         SIGN-UP
         <br />
 
+        <div className="name">
         Name: <input type="text" name="name" placeholder="name" />
         <br />
+        </div>
 
-        Age: <input type="text" name="age" placeholder="age" />
+        <div className="age">
+        Birthdate: <input type="date" name="age" placeholder="age" />
         <br />
+        </div>
 
+        <div className="email">
         Email: <input type="email" name="email" placeholder="name@example.com" />
         <br />
+        </div>
 
+        <div className="password">
         Password: <input type="password" name="password" placeholder="password" />
         <br />
+        </div>
 
-        <input type="submit" value="Submit" />
+        <input className="submit" type="submit" value="Submit" />
       </form>
       <br />
       {error && <div style={{ color: "red" }}>Error: {error}</div>}
-      <div>
-        Already registered, <a href="#login" onClick={handleClick}>Login</a> here.
+      <div className="gotologin">
+        Already registered
+      <div className="lnk">
+        <a href="#login" onClick={handleClick}>Login</a>
+      </div>
+          here.
       </div>
     </div>
   );

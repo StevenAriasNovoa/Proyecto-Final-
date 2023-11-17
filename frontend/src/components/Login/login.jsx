@@ -52,16 +52,20 @@ const Login = ({ setCurrUser, setShow }) => {
         LOG-IN
         <br />
 
+        <div className="email">
         Email: <input type="email"  name="email" placeholder="email" />
-        <br /> 
+        <br />
+        </div>
 
+        <div className="password">
         Password: <input type="password" name="password" placeholder="password" />
         <br />
+        </div>
 
-        <input type="submit" value="Login" />
+        <input className="submit" type="submit" value="Login" />
       </form>
       <br />
-      {error && <div style={{ color: "red" }}>Error: {error}</div>}
+      {error && <div className="msjerror" style={{ color: "red" }}>Error: {error}</div>}
       <div>
         Not registered yet? <a href="#signup" onClick={handleClick}>Signup</a> here.
       </div>
