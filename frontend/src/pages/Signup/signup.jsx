@@ -58,26 +58,26 @@ const Signup = ({ setCurrUser, setShow }) => {
   return (
     <div>
       <form ref={formRef} onSubmit={handleSubmit}>
-        SIGN-UP
+        <div >SIGN-UP</div>  
         <br />
 
         <div className="name">
-        Name: <input type="text" name="name" placeholder="name" />
+        Name: <input className="input" type="text" name="name" placeholder="name" />
         <br />
         </div>
 
         <div className="age">
-        Birthdate: <input type="date" name="age" placeholder="age" />
+        Birthdate: <input className="input" type="date" name="age" placeholder="age" />
         <br />
         </div>
 
         <div className="email">
-        Email: <input type="email" name="email" placeholder="name@example.com" />
+        Email: <input className="input" type="email" name="email" placeholder="name@example.com" />
         <br />
         </div>
 
         <div className="password">
-        Password: <input type="password" name="password" placeholder="password" />
+        Password: <input className="input" type="password" name="password" placeholder="password" />
         <br />
         </div>
 

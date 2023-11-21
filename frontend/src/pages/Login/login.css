@@ -26,8 +26,7 @@ form {
   text-align: center;
 }
 
-/* Estilos para los campos del formulario */
-form input {
+.input {
   border: none;
   border-radius: 10px;
   width: 100%;
@@ -36,19 +35,11 @@ form input {
   box-sizing: border-box;
 }
 
-/* Estilos para el botón de envío */
-form .submit {
+.submit {
   border: 2px solid white;
   background-color: #b134db;
   color: #fff;
   padding: 10px 20px;
   border-radius: 10px;
   cursor: pointer;
-}
-
-/* Estilos para los enlaces del formulario */
-form a {
-  color: #b134db;
-  text-decoration: none;
-  margin-top: 10px;
 }

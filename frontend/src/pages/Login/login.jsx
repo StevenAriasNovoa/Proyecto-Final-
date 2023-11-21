@@ -53,12 +53,12 @@ const Login = ({ setCurrUser, setShow }) => {
         <br />
 
         <div className="email">
-        Email: <input type="email"  name="email" placeholder="email" />
+        Email: <input className="input" type="email"  name="email" placeholder="email" />
         <br />
         </div>
 
         <div className="password">
-        Password: <input type="password" name="password" placeholder="password" />
+        Password: <input className="input" type="password" name="password" placeholder="password" />
         <br />
         </div>
 
