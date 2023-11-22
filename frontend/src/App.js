@@ -17,6 +17,7 @@ const App = () => {
         />
         <Route path="/user" element={<User currUser={currUser} setCurrUser={setCurrUser} />} />
         <Route path='/course' Component={Course} />
+        <Route path='/user' Component={User}/>
         <Route path='/*' Component={NotFound} />
       </Routes>
     </Router>

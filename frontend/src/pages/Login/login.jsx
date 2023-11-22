@@ -49,9 +49,6 @@ const Login = ({ setCurrUser, setShow }) => {
   return (
     <div>
       <form ref={formRef} onSubmit={handleSubmit}>
-        LOG-IN
-        <br />
-
         <div className="email">
         Email: <input className="input" type="email"  name="email" placeholder="email" />
         <br />
@@ -66,8 +63,12 @@ const Login = ({ setCurrUser, setShow }) => {
       </form>
       <br />
       {error && <div className="msjerror" style={{ color: "red" }}>Error: {error}</div>}
-      <div>
-        Not registered yet? <a href="#signup" onClick={handleClick}>Signup</a> here.
+      <div className="gotologin">
+        Not registered yet? 
+        <br />
+        <a className="link" href="#signup" onClick={handleClick}>Signup</a>
+        <br />
+        here.
       </div>
     </div>
   );

@@ -45,7 +45,8 @@ form {
   cursor: pointer;
 }
 
-.lnk {
+.link {
+  padding: 5%;
   color: #fff;
   text-decoration: none;
   margin-top: 10px;
@@ -54,5 +55,15 @@ form {
   border: 2px solid white; 
   border-radius: 10px;
   cursor: pointer;
+  text-align: center;
 }
 
+.gotologin {
+  color: #fff;
+  text-align: center;
+}
+
+.titlesing{
+  text-align: center;
+  color: #fff;
+}

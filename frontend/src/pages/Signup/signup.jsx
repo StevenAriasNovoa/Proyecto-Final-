@@ -57,10 +57,8 @@ const Signup = ({ setCurrUser, setShow }) => {
 
   return (
     <div>
+      <h2 className="titlesing">Sign up here</h2>
       <form ref={formRef} onSubmit={handleSubmit}>
-        <div >SIGN-UP</div>  
-        <br />
-
         <div className="name">
         Name: <input className="input" type="text" name="name" placeholder="name" />
         <br />
@@ -81,16 +79,17 @@ const Signup = ({ setCurrUser, setShow }) => {
         <br />
         </div>
 
-        <input className="submit" type="submit" value="Submit" />
+        <input className="submit" type="submit" value="SignUp" />
       </form>
       <br />
       {error && <div style={{ color: "red" }}>Error: {error}</div>}
       <div className="gotologin">
-        Already registered
-      <div className="lnk">
-        <a href="#login" onClick={handleClick}>Login</a>
-      </div>
-          here.
+        Already registered   
+        <br />
+        <a className="link" href="#login" onClick={handleClick}>
+          Login</a> 
+          <br />
+        here.
       </div>
     </div>
   );

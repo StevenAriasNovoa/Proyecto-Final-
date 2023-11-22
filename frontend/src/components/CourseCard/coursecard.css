@@ -1,7 +1,13 @@
-.product-container {
+.course-container {
   position: relative;
 }
 
+.boss{
+  text-align: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+  grid-gap: 19px;
+}
 .card {
   font-family: Lato, sans-serif;
   position: relative;
@@ -32,7 +38,7 @@
   position: relative;
   font-weight: 600;
   letter-spacing: 1px;
-  color: #fff;
+  color: black;
   margin-top: 12px;
 }
 
@@ -170,19 +176,15 @@
   transition: 0.05s;
 }
 
-.product-1 {
-  --product-color: #EB6CA4;
-}
-
 .size span {
   cursor: pointer;
   z-index: 50;
 }
 
 .feature .tt:hover {
-  background: #038dff;
+  background: #18466b;
 }
 
 .feature .ttt:hover {
-  background: #09ff0d;
+  background: #18466b;
 }

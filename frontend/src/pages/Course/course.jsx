@@ -1,6 +1,5 @@
-import CourseCard from '../../components/CourseCard/coursecard.jsx';
 import { useEffect, useState } from "react";
-
+import CourseCard from "../../components/CourseCard/coursecard.jsx";
 
 const Course_url = "http://localhost:3001/api/v1/courses"
 
@@ -23,7 +22,7 @@ useEffect(() => {
     return (
       <div className="boss">
       <div className="courses">
-      <CourseCard id="courseboss" courses={course}></CourseCard>
+      <CourseCard courses={course}></CourseCard>
       </div>
       </div>
     );
