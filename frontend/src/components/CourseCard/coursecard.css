@@ -202,8 +202,9 @@
 .courses {
   text-align: center;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(4000px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   grid-gap: 19px;
+
 }
 
 .body4 {
@@ -211,6 +212,6 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  position: relative;
+  position: relative;  
 }
 
