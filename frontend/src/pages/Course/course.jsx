@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import CourseCard from "../../components/CourseCard/coursecard.jsx";
+import Navbar  from "../../components/Navbar/navbar.jsx";
 
 const Course_url = "http://localhost:3001/api/v1/courses"
 
@@ -20,9 +21,13 @@ useEffect(() => {
   fetchData();
 },[])
     return (
+      <div>
+      <Navbar>
+      </Navbar>
       <div className="boss">
       <div className="courses">
       <CourseCard courses={course}></CourseCard>
+      </div>
       </div>
       </div>
     );

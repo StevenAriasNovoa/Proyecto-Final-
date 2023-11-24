@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-
+import './login.css'
 const Login = ({ setCurrUser, setShow }) => {
   const formRef = useRef();
   const [error, setError] = useState(null);
@@ -47,6 +47,7 @@ const Login = ({ setCurrUser, setShow }) => {
   };
 
   return (
+    <body className="body2">
     <div>
       <form ref={formRef} onSubmit={handleSubmit}>
         <div className="email">
@@ -71,6 +72,7 @@ const Login = ({ setCurrUser, setShow }) => {
         here.
       </div>
     </div>
+    </body>
   );
 };
 

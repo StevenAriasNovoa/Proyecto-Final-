@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_16_172055) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_23_201225) do
   create_table "addresses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "province"
     t.string "canton"
@@ -36,13 +36,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_16_172055) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "categories_courses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "categories_id", null: false
+  create_table "category_courses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "category_id", null: false
     t.bigint "course_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["categories_id"], name: "index_categories_courses_on_categories_id"
-    t.index ["course_id"], name: "index_categories_courses_on_course_id"
+    t.index ["category_id"], name: "index_category_courses_on_category_id"
+    t.index ["course_id"], name: "index_category_courses_on_course_id"
   end
 
   create_table "courses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -53,6 +53,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_16_172055) do
     t.boolean "favorite"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "institution_id"
+    t.index ["institution_id"], name: "index_courses_on_institution_id"
   end
 
   create_table "institutions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -99,9 +101,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_16_172055) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "jti"
-    t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["jti"], name: "index_users_on_jti"
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   create_table "users_roles", id: false, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -114,8 +114,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_16_172055) do
 
   add_foreign_key "branches", "addresses"
   add_foreign_key "branches", "courses"
-  add_foreign_key "categories_courses", "categories", column: "categories_id"
-  add_foreign_key "categories_courses", "courses"
+  add_foreign_key "category_courses", "categories"
+  add_foreign_key "category_courses", "courses"
+  add_foreign_key "courses", "institutions"
   add_foreign_key "user_courses", "courses"
   add_foreign_key "user_courses", "users"
 end

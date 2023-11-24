@@ -6,9 +6,11 @@ class User < ApplicationRecord
         :recoverable, :validatable,
         :jwt_authenticatable, jwt_revocation_strategy: JwtDenylist
 
-  validates :name, presence: true, length: { maximum: 255 }
-  validates :email, presence: true, uniqueness: { case_sensitive: false }, format: { with: URI::MailTo::EMAIL_REGEXP }
-  validates :age, numericality: { only_integer: true, greater_than_or_equal_to: 0 }, allow_nil: true
-  validates :encrypted_password, presence: true
+        validates_presence_of :name, :encrypted_password
+        validates_length_of :name, maximum: 255
+        validates_presence_of :email
+        validates_uniqueness_of :email, case_sensitive: false
+        validates_format_of :email, with: URI::MailTo::EMAIL_REGEXP
+        validates_numericality_of :age, only_integer: true, greater_than_or_equal_to: 0, allow_nil: true
 
 end

@@ -16,9 +16,9 @@ const App = () => {
           element={<User currUser={currUser} setCurrUser={setCurrUser} />}
         />
         <Route path="/user" element={<User currUser={currUser} setCurrUser={setCurrUser} />} />
-        <Route path='/course' Component={Course} />
-        <Route path='/user' Component={User}/>
-        <Route path='/*' Component={NotFound} />
+        <Route path='/course' element={<Course />} />
+        <Route path='/user' element={<User />} />
+        <Route path='*' element={<NotFound />} />
       </Routes>
     </Router>
   );

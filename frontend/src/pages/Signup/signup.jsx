@@ -56,6 +56,7 @@ const Signup = ({ setCurrUser, setShow }) => {
   };
 
   return (
+    <body className="body1">
     <div>
       <h2 className="titlesing">Sign up here</h2>
       <form ref={formRef} onSubmit={handleSubmit}>
@@ -65,7 +66,7 @@ const Signup = ({ setCurrUser, setShow }) => {
         </div>
 
         <div className="age">
-        Birthdate: <input className="input" type="date" name="age" placeholder="age" />
+        Age:<input className="input" type="number" name="age" placeholder="18" />
         <br />
         </div>
 
@@ -92,6 +93,7 @@ const Signup = ({ setCurrUser, setShow }) => {
         here.
       </div>
     </div>
+    </body>
   );
 };
 

@@ -5,7 +5,7 @@ import PrivateText from '../../pages/PrivateText/privatetext.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect, useState } from "react";
 import Navbar from '../Navbar/navbar.jsx';
-
+import "./user.css"
 const User = ({ currUser, setCurrUser }) => {
   const [show, setShow] = useState(true)
 
@@ -13,6 +13,7 @@ const User = ({ currUser, setCurrUser }) => {
 
     return (
       <header>
+      <body className='body3'>
         <Navbar></Navbar> 
         <br />
       <div>
@@ -20,6 +21,7 @@ const User = ({ currUser, setCurrUser }) => {
         <PrivateText currUser={currUser} />
         <Logout setCurrUser={setCurrUser} />
       </div>
+    </body>
       </header>
     )
   return (
