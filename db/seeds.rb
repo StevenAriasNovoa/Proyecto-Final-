@@ -6,13 +6,13 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-Institution.create([{name: 'Universidad XYZ', insti_type: 'University'},
-  {name: 'Escuela ABC', insti_type: 'School'},
-  {name: 'Instituto 123', insti_type: 'Institute'},
-  {name: 'Colegio Z', insti_type: 'College'}])
+# Institution.create([{name: 'Universidad XYZ', insti_type: 'University'},
+#   {name: 'Escuela ABC', insti_type: 'School'},
+#   {name: 'Instituto 123', insti_type: 'Institute'},
+#   {name: 'Colegio Z', insti_type: 'College'}])
 
-  Course.create(name: "curso de ingles", description: "introduccion al idioma con un curso de nivel A1",
-  registration_day: Time.now, requirement: "ninguno", favorite: false, institutions_id: 1)
+  # Course.create(name: "curso de ingles", description: "introduccion al idioma con un curso de nivel A1",
+  # registration_day: Time.now, requirement: "ninguno", favorite: false, institutions_id: 1)
 
 # Course.create([{
 #   name: 'Curso de Matemáticas',
@@ -83,9 +83,9 @@ Institution.create([{name: 'Universidad XYZ', insti_type: 'University'},
 # }])
 
 
-Branch.create(address_id: 1, course_id: 1, name: 'Rodrigo facio')
-Branch.create(address_id: 4, course_id: 2, name: 'Santa Lucia')
-Branch.create(address_id: 3, course_id: 3, name: 'Ocidene')
-Branch.create(address_id: 1, course_id: 4, name: 'Tobias Vargas')
+# Branch.create(address_id: 1, course_id: 1, name: 'Rodrigo facio')
+# Branch.create(address_id: 4, course_id: 2, name: 'Santa Lucia')
+# Branch.create(address_id: 3, course_id: 3, name: 'Ocidene')
+# Branch.create(address_id: 1, course_id: 4, name: 'Tobias Vargas')
 
 # User.create(name: "deylan", age: 18, email: "deylan@gmail.com", password: 123456)

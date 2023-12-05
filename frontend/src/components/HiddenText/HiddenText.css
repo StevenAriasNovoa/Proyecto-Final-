@@ -1,0 +1,8 @@
+.hiddentext {
+    color: red;
+}
+
+.boxtext {
+    display: flex;
+    justify-content: center;
+}

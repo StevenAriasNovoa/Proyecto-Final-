@@ -6,6 +6,7 @@ ruby "3.0.2"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.8"
 
+gem 'jwt'
 gem 'devise', '~> 4.2'
 gem 'pundit', '~> 2.3', '>= 2.3.1'
 gem 'rolify', '~> 5.2'
@@ -13,7 +14,6 @@ gem 'rack-cors'
 gem 'devise-jwt'
 gem 'pry-byebug', '~> 3.10', '>= 3.10.1'
 gem 'dotenv-rails', groups: [:development, :test]
-
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 
@@ -76,5 +76,11 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+end
 
+group :test, :development do
+  gem 'rspec-rails', '~> 6.1'
+  gem 'shoulda-matchers'
+  gem 'factory_bot_rails'
+  gem 'rails-controller-testing'
 end

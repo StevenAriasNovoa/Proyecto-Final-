@@ -1,8 +1,7 @@
-// # frontend / src / components / User.js
-import Signup from "../Signup/signup.jsx"
-import Login from "../Login/login.jsx"
-import Logout from "../Logout/logout.jsx";
-import PrivateText from "../PrivateText/privatetext.jsx"
+import Signup from "../Signup/Signup.jsx";
+import Login from "../Login/Login.jsx";
+import Logout from "../Logout/Logout.jsx";
+import PrivateText from "../PrivateText/Privatetext.jsx"
 import { useState } from "react";
 
 const User = ({ currUser, setCurrUser }) => {
@@ -10,7 +9,7 @@ const User = ({ currUser, setCurrUser }) => {
   if (currUser)
     return (
       <div>
-        WELCOME TO ZENEDHUB
+        welcome CourseFinder
         <br />
         {currUser.name}
         
