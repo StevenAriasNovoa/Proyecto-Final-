@@ -1,32 +1,37 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
-// import HiddenText from "../../components/HiddenText/HiddenText.jsx";
-import Spinner from "../../components/Spinner/Spinner.jsx"
-import "./Coursecard.css";
+import Spinner from "../Spinner/Spinner.jsx";
+import "./CourseCard.css";
 
-function CourseCard(props) {
+const CourseCard = (props) => {
   return (
     <div className="course-card-container">
       {props.courses && props.courses.length > 0 ? (
         props.courses.map((course) => (
           <Card key={course.id} className="text-center">
-            <Card.Header>#{course.id}</Card.Header>
+            <Card.Header>
+              <Link to={`/edit-course/${course.id}`} className="links" >
+                Edit
+              </Link>
+              <Link to={`/delete-course/${course.id}`} className="links" >
+                Delete
+              </Link>
+            </Card.Header>
             <Card.Body>
               <Card.Title>{course.name}</Card.Title>
               <Card.Text>{course.description}</Card.Text>
-              <button><Link to="/courseinfo">Ver información completa</Link></button>
-              <button><Link to='/courseedit/'>Edit</Link></button>
+                <Link to={`/course/${course.id}`} className="btnshow" >
+                  Ver información completa
+                </Link>
             </Card.Body>
             <Card.Footer className="text-muted">{course.registration_day}</Card.Footer>
           </Card>
         ))
       ) : (
         <Spinner />
-      )
-      }
-    </div >
-
+      )}
+    </div>
   );
 }
 

@@ -21,12 +21,14 @@ Rails.application.routes.draw do
 
     namespace :api do
       namespace :v1 do
-      resources :courses
+      resources :courses 
         resources :institutions
         resources :users
         resources :categories
         resources :addresses
-        resources :branchs
+        resources :branches
+        resources :category_courses
+        resources :user_courses
     end
   end
 

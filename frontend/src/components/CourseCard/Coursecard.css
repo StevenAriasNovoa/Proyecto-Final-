@@ -1,16 +1,9 @@
 .card {
   width: 500px; 
   margin: 10px;
-  background: linear-gradient(to bottom, #3f184c44, #0b1a29, #3f184c44);
-  color: #fff;
-  border: none;
+  border: solid 1px black;
   border-radius: 20px;
   text-align: center;
-  box-shadow:
-    2px 2px 5px rgb(105, 2, 250),
-    6px 6px 5px white,
-    15px 18px 10px black,
-    10px 10px 10px rgb(0, 0, 0, 0.5) inset;
 }
 
 .card-content {
@@ -33,19 +26,26 @@
   padding: 10px 20px;
   border-radius: 10px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
 .card-button:hover {
-  background-color: #8e0a3c; 
+  background-color: #000000; 
 }
 
 .course-card-container {
+  margin-left: -15%;
   display: flex;
   flex-wrap: wrap;
 }
 
 .card {
-  width: 45%; /* Ajusta el ancho según tus preferencias */
+  width: 45%; 
   margin: 10px;
+}
+
+.btnshow {
+  text-decoration: none;
+  color: white;
+  padding: 0.5%;
+  background-color: #27004f;
 }

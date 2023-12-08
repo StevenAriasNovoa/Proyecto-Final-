@@ -1,4 +1,4 @@
-class Api::V1::BranchController < ApplicationController
+class Api::V1::BranchesController < ApplicationController
     before_action :set_branch, only: [:show, :update, :destroy]
 
     def index
@@ -12,7 +12,6 @@ class Api::V1::BranchController < ApplicationController
 
     def create
         @branch = Branch.new(branch_params)
-
         if @branch.save
             render json: @branch, status: :created
         else
@@ -40,6 +39,6 @@ class Api::V1::BranchController < ApplicationController
     end
 
     def branch_params
-        params.require(:branch).permit(:name, :location, :manager, :phone)
+        params.require(:branch).permit(:name, :course_id, :address_id)
     end
 end

@@ -1,8 +1,10 @@
 .home-container {
     display: flex;
-    height: 100vh; 
   }
 
+.sidebarho {
+  margin-top: 10%;
+}
 
 .welcome-section {
     background-color: #4140406c;

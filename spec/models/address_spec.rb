@@ -47,6 +47,11 @@ RSpec.describe Address, type: :model do
       expect(address).to_not be_valid
     end
 
+    it "is not valid without a neighborhood" do
+      address.zip_code = nil
+      expect(address).to_not be_valid
+    end
+
     it "validates maximum length of neighborhood" do
       address.neighborhood = "a" * 51
       expect(address).to_not be_valid

@@ -1,0 +1,12 @@
+.main-container {
+    display: flex;
+}
+
+.content-container {
+    flex: 1;
+    padding: 20px;
+}
+
+.boxcourse-info {
+    margin: 20px;
+}

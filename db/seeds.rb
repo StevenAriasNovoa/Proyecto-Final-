@@ -89,3 +89,6 @@
 # Branch.create(address_id: 1, course_id: 4, name: 'Tobias Vargas')
 
 # User.create(name: "deylan", age: 18, email: "deylan@gmail.com", password: 123456)
+
+
+CategoryCourse.create(course_id: 3, category_id: 1 )

@@ -1,15 +1,13 @@
+.boos {
+    background-color: #212137;
+}
 
 .course-container {
     display: flex;
 }
 
-.barra {
-    width: 225px;
-    background-color: thistle;
-    color: #fff;
-    padding: 20px;
-    z-index: 2;
-    height: 100vh;
+.sidebarcs {
+    height: 400vh;
 }
 
 .main-content {
@@ -18,7 +16,6 @@
     justify-content: flex-start;
     align-items: flex-start;
     padding: 20px;
-    
 }
 
 .course-cards-container {

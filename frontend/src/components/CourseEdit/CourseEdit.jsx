@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import Sidebar from '../SideBard/Sidebard';
+import Footer from '../Footer/Footer';
+import { useParams } from 'react-router-dom';
 
-const CourseEdit = ({ id, onClose, onUpdate }) => {
+const CourseEdit = () => {
+    const { selectedId } = useParams();
+
     const [courseData, setCourseData] = useState({
         name: '',
         description: '',
@@ -9,16 +14,20 @@ const CourseEdit = ({ id, onClose, onUpdate }) => {
         requirement: '',
         favorite: false,
     });
-    console.log(id);
+
     useEffect(() => {
-        if (id !== undefined) {
+    }, [selectedId]);
+
+    useEffect(() => {
+        console.log("CourseEdit - useEffect con courseId:", selectedId);
+        if (selectedId) {
             // Obtener los datos del curso al cargar el componente
-            fetch(`/api/v1/courses/${id}`)
+            fetch(`http://localhost:3001/api/v1/courses/${selectedId}`)
                 .then((response) => response.json())
                 .then((data) => setCourseData(data))
                 .catch((error) => console.error('Error de red:', error));
         }
-    }, [id]);
+    }, [selectedId]);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -29,8 +38,8 @@ const CourseEdit = ({ id, onClose, onUpdate }) => {
         event.preventDefault();
 
         try {
-            const response = await fetch(`/api/v1/courses/${id}`, {
-                method: 'put',
+            const response = await fetch(`http://localhost:3001/api/v1/courses/${selectedId}`, {
+                method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -38,9 +47,9 @@ const CourseEdit = ({ id, onClose, onUpdate }) => {
             });
 
             if (response.ok) {
-                // Curso actualizado exitosamente
-                onUpdate(); // Puedes usar esta función para recargar la lista de cursos u otras acciones
-                onClose(); // Cierra el formulario de edición
+                // // Curso actualizado exitosamente
+                // onUpdate(); // Puedes usar esta función para recargar la lista de cursos u otras acciones
+                // onClose(); // Cierra el formulario de edición
             } else {
                 console.error('Error al actualizar el curso');
             }
@@ -50,16 +59,21 @@ const CourseEdit = ({ id, onClose, onUpdate }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <>
+            <div className='main-container'>
+                <Sidebar />
+                <form onSubmit={handleSubmit}>
+                    <label htmlFor="name">Nombre:</label>
+                    <input type="text" id="name" name="name" value={courseData.name} onChange={handleChange} />
 
-            <label htmlFor="name">Nombre:</label>
-            <input type="text" id="name" name="name" value={courseData.name} onChange={handleChange} />
+                    <label htmlFor="description">Descripción:</label>
+                    <input type="text" id="description" name="description" value={courseData.description} onChange={handleChange} />
 
-            <label htmlFor="description">Descripción:</label>
-            <input type="text" id="description" name="description" value={courseData.description} onChange={handleChange} />
-
-            <button type="submit">Actualizar Curso</button>
-        </form>
+                    <button type="submit">Actualizar Curso</button>
+                </form>
+            </div>
+            <Footer />
+        </>
     );
 };
 

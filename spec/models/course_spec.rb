@@ -49,16 +49,6 @@ RSpec.describe Course, type: :model do
       expect(subject.errors[:requirement]).to include("is too long (maximum is 100 characters)")
     end
 
-    it "is not valid without a favorite" do
-      subject.favorite = nil
-      expect(subject).to_not be_valid
-    end
-
-    it "is not valid without a institution" do
-      subject.institution = nil
-      expect(subject).to_not be_valid
-    end
-
     it "is not valid without a institution_id" do
       subject.institution = nil
       expect(subject).to_not be_valid

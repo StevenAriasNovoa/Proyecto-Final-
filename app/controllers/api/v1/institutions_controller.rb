@@ -43,11 +43,11 @@ class Api::V1::InstitutionsController <  ApplicationController
   private
   
   def set_institution
-      @institution = institution.find(params[:id])
+      @institution = Institution.find(params[:id])
   end
   
   def institution_params
-      params.require(:institution).permit(:name, :description, :registration_day, :requirement, :favorite)
+      params.require(:institution).permit(:name, :insti_type)
+  
   end
-
 end

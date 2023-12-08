@@ -8,7 +8,8 @@ const User = ({ currUser, setCurrUser }) => {
   const [show, setShow] = useState(true)
   if (currUser)
     return (
-      <div>
+    <>
+      <div className="main-container">
         welcome CourseFinder
         <br />
         {currUser.name}
@@ -16,7 +17,9 @@ const User = ({ currUser, setCurrUser }) => {
         <PrivateText currUser={currUser} />
         <Logout setCurrUser={setCurrUser} />
       </div>
-    )
+    </>
+    ) 
+
   return (
     <div>
       {show ?

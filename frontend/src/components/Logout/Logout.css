@@ -23,7 +23,7 @@
 }
 
 .sign svg {
-    width: 20px;
+    width: 80%;
 }
 
 .sign svg path {
@@ -31,7 +31,6 @@
 }
 
 .text {
-    position: absolute;
     right: 0%;
     width: 0%;
     opacity: 0;
@@ -42,7 +41,7 @@
 }
 
 .Btn:hover {
-    width: 125px;
+    width: 40%;
     border-radius: 40px;
     transition-duration: .3s;
 }

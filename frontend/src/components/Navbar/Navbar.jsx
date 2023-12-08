@@ -1,25 +1,50 @@
 import React from 'react';
-import Logout from '../Logout/Logout';
-
+import { useState } from 'react';
+import Logoimg from '../Navbar/logotext.png';
 import './Navbar.css';
 
+const Navbar = ({ onSearch }) => {
+  const [searchCourse, setSearchCourse] = useState('');
 
-const CustomNavbar = () => {
+  const handleSearchChange = (event) => {
+    setSearchCourse(event.target.value);
+  };
+
+  const search = () => {
+    if (searchCourse.trim() === '') {  // Si la búsqueda está vacía, cargar todos los cursos
+      
+      onSearch(''); // Llama con una cadena vacía para cargar todos los cursos
+    } else {
+      onSearch(searchCourse.trim()); // Llama a onSearch con el término de búsqueda
+    }
+  };
+
+  const detectenter = (e) => {
+    e.key === 'Enter' && search()
+  };
 
   return (
     <>
       <div className="navbar">
-        <div className="logo">logo proximamente xd</div>
+        <img className='logoside' src={Logoimg} alt="logo" />
         <div className="search">
-          <input type="text" placeholder="Buscar" />
-          <button className='btn'>Buscar</button>
+          <input
+            onChange={handleSearchChange}
+            className='textseeker'
+            type="text"
+            placeholder="categoria del curso, o nombre"
+            onKeyDown={detectenter}
+          />
+          <button
+            onClick={search}
+            className='seeker'
+          >Buscar</button>
         </div>
-        <div className="logout">
-        <Logout />
+        <div>
         </div>
       </div>
     </>
   );
 };
 
-export default CustomNavbar;
+export default Navbar;
