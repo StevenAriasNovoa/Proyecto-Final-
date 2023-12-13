@@ -1,59 +1,86 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
+import { getCourses } from '../../apis/coursesApi';
+import { getAddresses } from '../../apis/addressesApi';
 import Sidebar from '../SideBard/Sidebard';
 import Footer from '../Footer/Footer';
 
-class CreateBranch extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            name: '',
-            courseName: '', // Nuevo estado para almacenar el nombre del curso
-            course_id: '',
-            address_id: '',
-            errorMessages: [],
-            courses: [], // Nuevo estado para almacenar la lista de cursos
-        };
-    }
+const CreateBranch = () => {
+    const [name, setName] = useState('');
+    const [courseName, setCourseName] = useState('');
+    const [zipCode, setZipCode] = useState('');
+    const [errorMessages, setErrorMessages] = useState([]);
+    const [courses, setCourses] = useState([]);
+    const [addresses, setAddresses] = useState([]);
 
-    async componentDidMount() {
-        // Hacer una solicitud para obtener la lista de cursos
-        try {
-            const response = await fetch('http://localhost:3001/api/v1/courses');
-            if (response.ok) {
-                const courses = await response.json();
-                this.setState({ courses });
-            } else {
-                console.error('Error al obtener la lista de cursos.');
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const coursesData = await getCourses();
+                setCourses(coursesData);
+            } catch (error) {
+                console.error('Error al obtener cursos:', error);
+            } finally {
             }
-        } catch (error) {
-            console.error('Error de red:', error);
-        }
-    }
+        };
 
-    handleChange = (event) => {
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const coursesData = await getAddresses();
+                setCourses(coursesData);
+            } catch (error) {
+                console.error('Error al obtener ubicaciones:', error);
+            } finally {
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    const handleChange = (event) => {
         const { name, value } = event.target;
-        this.setState({ [name]: value });
+        switch (name) {
+            case 'name':
+                setName(value);
+                break;
+            case 'courseName':
+                setCourseName(value);
+                break;
+            case 'zip_code':
+                setZipCode(value);
+                break;
+            default:
+                break;
+        }
     };
 
-    handleSubmit = async (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
-        // Buscar el ID del curso por nombre
-        const selectedCourse = this.state.courses.find(course => course.name === this.state.courseName);
+        const selectedCourse = courses.find(course => course.name === courseName);
         const course_id = selectedCourse ? selectedCourse.id : null;
 
-        // Verificar si se encontró el curso
+        const zipCodeAsNumber = Number(zipCode);
+        const selectedLocation = addresses.find(address => address.zip_code === zipCodeAsNumber);
+        const address_id = selectedLocation ? selectedLocation.id : null;
+
+        if (!address_id) {
+            setErrorMessages(['Ubicación no válida. Por favor, ingrese un código postal válido.']);
+            return;
+        }
+
         if (!course_id) {
-            this.setState({
-                errorMessages: ['Nombre de curso no válido. Por favor, elija un curso existente.'],
-            });
+            setErrorMessages(['Nombre de curso no válido. Por favor, elija un curso existente.']);
             return;
         }
 
         const branchData = {
-            name: this.state.name,
+            name,
             course_id,
-            address_id: this.state.address_id,
+            address_id,
         };
 
         try {
@@ -71,7 +98,7 @@ class CreateBranch extends Component {
                 if (response.status === 422) {
                     const errorData = await response.json();
                     console.log('Errores de validación:', errorData.error);
-                    this.setState({ errorMessages: errorData.error });
+                    setErrorMessages(errorData.error);
                 } else {
                     const errorText = await response.text();
                     console.error('Error al crear el branch. Detalles:', errorText);
@@ -81,71 +108,67 @@ class CreateBranch extends Component {
             console.error('Error de red:', error);
         }
 
-        this.setState({
-            name: '',
-            courseName: '',
-            course_id: '',
-            address_id: '',
-        });
+        // Restaurar el estado después de enviar el formulario
+        setName('');
+        setCourseName('');
+        setZipCode('');
     };
 
-    render() {
-        return (
-            <>
-                <div className='main-container'>
-                    <Sidebar />
-                    <form onSubmit={this.handleSubmit}>
-                        {this.state.errorMessages.length > 0 && (
-                            <div style={{ color: 'red' }}>
-                                <p>Error al crear el branch:</p>
-                                <ul>
-                                    {this.state.errorMessages.map((error, index) => (
-                                        <li key={index}>{error}</li>
-                                    ))}
-                                </ul>
-                            </div>
-                        )}
-
-                        <div>
-                            <label htmlFor="name">Nombre del Branch:</label>
-                            <input
-                                type="text"
-                                id="name"
-                                name="name"
-                                value={this.state.name}
-                                onChange={this.handleChange}
-                            />
+    return (
+        <>
+            <div className='main-container'>
+                <Sidebar />
+                <form onSubmit={handleSubmit}>
+                    {errorMessages.length > 0 && (
+                        <div style={{ color: 'red' }}>
+                            <p>Error al crear el branch:</p>
+                            <ul>
+                                {errorMessages.map((error, index) => (
+                                    <li key={index}>{error}</li>
+                                ))}
+                            </ul>
                         </div>
+                    )}
 
-                        <div>
-                            <label htmlFor="courseName">Nombre del Curso:</label>
-                            <input
-                                type="text"
-                                id="courseName"
-                                name="courseName"
-                                value={this.state.courseName}
-                                onChange={this.handleChange}
-                            />
-                        </div>
+                    <div>
+                        <label htmlFor="name">Nombre del Branch:</label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            value={name}
+                            onChange={handleChange}
+                        />
+                    </div>
 
-                        <div>
-                            <label htmlFor="address_id">ID de la Dirección:</label>
-                            <input
-                                type="text"
-                                id="address_id"
-                                name="address_id"
-                                value={this.state.address_id}
-                                onChange={this.handleChange}
-                            />
-                        </div>
+                    <div>
+                        <label htmlFor="courseName">Nombre del Curso:</label>
+                        <input
+                            type="text"
+                            id="courseName"
+                            name="courseName"
+                            value={courseName}
+                            onChange={handleChange}
+                        />
+                    </div>
 
-                        <button type="submit">Crear Branch</button>
-                    </form>
-                </div>
-                <Footer />
-            </>
-        );
-    }
-}
+                    <div>
+                        <label htmlFor="zip_code">Código Postal:</label>
+                        <input
+                            type="text"
+                            id="zip_code"
+                            name="zip_code"
+                            value={zipCode}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <button type="submit">Crear Branch</button>
+                </form>
+            </div>
+            <Footer />
+        </>
+    );
+};
 
 export default CreateBranch;

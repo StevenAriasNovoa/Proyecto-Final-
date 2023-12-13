@@ -40,7 +40,7 @@ const App = () => {
         <Route path="/edit-profile/:selectedId" element={<EditProfile />} />
         {/* <Route path="/complete-form" element={<AddEntityForm />} /> */}
         <Route path='/addresses' element={<CreateLocation />} />
-        <Route path='/branches' element={<CreateBranch />} />
+        <Route path='/create-branches' element={<CreateBranch />} />
         <Route path='/institution-form' element={<InstitutionForm />} />
         <Route path='/create-categories' element={<CreateCategory />} />
         <Route path="*" element={<NotFound />} />

@@ -1,29 +1,50 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Sidebar from '../SideBard/Sidebard';
 import Footer from '../Footer/Footer';
 
-class InstitutionForm extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            name: '',
-            insti_type: '', // Estado para almacenar el tipo seleccionado
-        };
-    }
+const InstitutionForm = ({ onInstitutionSubmit }) => {
+    const navigate = useNavigate();
+    const [formData, setFormData] = useState({
+        name: '',
+        insti_type: '',
+    });
 
-    handleChange = (event) => {
+    const [errors, setErrors] = useState({});
+
+    const handleChange = (event) => {
         const { name, value } = event.target;
-        this.setState({ [name]: value });
+        setFormData({ ...formData, [name]: value });
     };
 
-    handleTypeChange = (selectedType) => {
-        this.setState({ insti_type: selectedType });
+    const handleTypeChange = (selectedType) => {
+        setFormData({ ...formData, insti_type: selectedType });
     };
 
-    handleSubmit = async (event) => {
+    const validateForm = () => {
+        const newErrors = {};
+
+        if (!formData.name.trim()) {
+            newErrors.name = 'El nombre es obligatorio';
+        }
+
+        if (!formData.insti_type) {
+            newErrors.insti_type = 'Seleccione un tipo de institución';
+        }
+
+        setErrors(newErrors);
+
+        return Object.keys(newErrors).length === 0;
+    };
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
-        // Aquí puedes realizar acciones adicionales, como enviar datos al servidor
+        if (!validateForm()) {
+            // Formulario no válido, no enviar la solicitud
+            return;
+        }
+
         try {
             const response = await fetch('http://localhost:3001/api/v1/institutions', {
                 method: 'POST',
@@ -32,82 +53,80 @@ class InstitutionForm extends Component {
                 },
                 body: JSON.stringify({
                     institution: {
-                        name: this.state.name,
-                        insti_type: this.state.insti_type,
+                        name: formData.name,
+                        insti_type: formData.insti_type,
                     },
                 }),
             });
 
             if (response.ok) {
-                console.log('Institución creada exitosamente');
+                alert('Institución creada exitosamente');
+                navigate("/create-course");
             } else {
                 if (response.status === 422) {
                     const errorData = await response.json();
                     console.log('Errores de validación:', errorData.error);
-                    // Manejar errores de validación
+                    setErrors(errorData.error);
                 } else {
                     const errorText = await response.text();
-                    // console.error('Error al crear la institución. Detalles:', errorText);
+                    console.error('Error al crear la institución. Detalles:', errorText);
                 }
             }
         } catch (error) {
-            // console.error('Error de red:', error);
+            console.error('Error de red:', error);
         }
 
-        // Luego, puedes limpiar el formulario si es necesario
-        this.setState({
+        // Limpiar el formulario después del envío exitoso o manejar errores
+        setFormData({
             name: '',
             insti_type: '',
         });
 
         // Si se proporciona una función de devolución de llamada, llámala con los datos de la institución
-        if (this.props.onInstitutionSubmit) {
-            this.props.onInstitutionSubmit({
-                name: this.state.name,
-                insti_type: this.state.insti_type,
-            });
+        if (onInstitutionSubmit) {
+            onInstitutionSubmit(formData);
         }
     };
 
-    render() {
-        return (
-            <>
-                <div className='main-container'>
-                    < Sidebar/>
-                    <form onSubmit={this.handleSubmit}>
-                        <div>
-                            <label htmlFor="name">Nombre de la Institución:</label>
-                            <input
-                                type="text"
-                                id="name"
-                                name="name"
-                                value={this.state.name}
-                                onChange={this.handleChange}
-                            />
-                        </div>
+    return (
+        <>
+            <div className='main-container'>
+                <Sidebar />
+                <form onSubmit={handleSubmit}>
+                    <div>
+                        <label htmlFor="name">Nombre de la Institución:</label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleChange}
+                        />
+                        {errors.name && <p className="error-message">{errors.name}</p>}
+                    </div>
 
-                        <div>
-                            <label htmlFor="type">Tipo de Institución:</label>
-                            <select
-                                id="type"
-                                name="type"
-                                value={this.state.insti_type}
-                                onChange={(e) => this.handleTypeChange(e.target.value)}
-                            >
-                                <option value="">Seleccionar Tipo</option>
-                                <option value="colegio">Colegio</option>
-                                <option value="universidad">Universidad</option>
-                                <option value="instituto">Instituto</option>
-                            </select>
-                        </div>
+                    <div>
+                        <label htmlFor="type">Tipo de Institución:</label>
+                        <select
+                            id="type"
+                            name="type"
+                            value={formData.insti_type}
+                            onChange={(e) => handleTypeChange(e.target.value)}
+                        >
+                            <option value="">Seleccionar Tipo</option>
+                            <option value="colegio">Colegio</option>
+                            <option value="universidad">Universidad</option>
+                            <option value="instituto">Instituto</option>
+                        </select>
+                        {errors.insti_type && <p className="error-message">{errors.insti_type}</p>}
+                    </div>
 
-                        <button type="submit">Agregar Institución</button>
-                    </form>
-                </div>
-                <Footer />
-            </>
-        );
-    }
-}
+                    <button type="submit">Agregar Institución</button>
+                </form>
+            </div>
+            <Footer />
+        </>
+    );
+};
 
 export default InstitutionForm;

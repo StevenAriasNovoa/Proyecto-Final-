@@ -1,39 +1,29 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import Sidebar from '../SideBard/Sidebard';
 import Footer from '../Footer/Footer';
+import { useNavigate } from 'react-router-dom';
 
-class CreateCourse extends Component {
+const CreateCourse = () => {
+    const navigate = useNavigate();
 
-    constructor(props) {
-        super(props);
+    const [formData, setFormData] = useState({
+        name: '',
+        description: '',
+        registration_day: '',
+        institution_id: '',
+        requirement: '',
+        favorite: false,
+    });
 
-        this.state = {
-            name: '',
-            description: '',
-            registration_day: '',
-            institution_id: '',
-            requirement: '',
-            favorite: false,
-            errorMessages: [],
-        };
-    }
+    const [errorMessages, setErrorMessages] = useState([]);
 
-    handleChange = (event) => {
+    const handleChange = (event) => {
         const { name, value } = event.target;
-        this.setState({ [name]: value });
+        setFormData({ ...formData, [name]: value });
     };
 
-    handleSubmit = async (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-
-        const courseData = {
-            name: this.state.name,
-            description: this.state.description,
-            registration_day: this.state.registration_day,
-            institution_id: this.state.institution_id,
-            requirement: this.state.requirement,
-            favorite: this.state.favorite,
-        };
 
         try {
             const response = await fetch('http://localhost:3001/api/v1/courses', {
@@ -41,18 +31,17 @@ class CreateCourse extends Component {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ course: courseData }),
+                body: JSON.stringify({ course: formData }),
             });
-            console.log('Datos del curso:', courseData);
 
             if (response.ok) {
                 console.log('Curso creado exitosamente');
+                navigate('/courses');
             } else {
                 if (response.status === 422) {
                     const errorData = await response.json();
                     console.log('Errores de validación:', errorData.error);
-                    this.setState({ errorMessages: errorData.error });
-
+                    setErrorMessages(errorData.error);
                 } else {
                     const errorText = await response.text();
                     // console.error('Error al crear el curso. Detalles:', errorText);
@@ -62,7 +51,7 @@ class CreateCourse extends Component {
             console.error('Error de red:', error);
         }
 
-        this.setState({
+        setFormData({
             name: '',
             description: '',
             registration_day: '',
@@ -72,97 +61,95 @@ class CreateCourse extends Component {
         });
     };
 
-    render() {
-        return (
-            <>
-                <div className='main-container'>
-                    <Sidebar />
-                    <form onSubmit={this.handleSubmit}>
-                        {this.state.errorMessages.length > 0 && (
-                            <div style={{ color: 'red' }}>
-                                <p>Error al crear el curso:</p>
-                                <ul>
-                                    {this.state.errorMessages.map((error, index) => (
-                                        <li key={index}>{error}</li>
-                                    ))}
-                                </ul>
-                            </div>
-                        )}
-
-                        <div>
-                            <label htmlFor="name">Course Name:</label>
-                            <input
-                                type="text"
-                                id="name"
-                                name="name"
-                                value={this.state.name}
-                                onChange={this.handleChange}
-                            />
+    return (
+        <>
+            <div className='main-container'>
+                <Sidebar />
+                <form onSubmit={handleSubmit}>
+                    {errorMessages.length > 0 && (
+                        <div style={{ color: 'red' }}>
+                            <p>Error al crear el curso:</p>
+                            <ul>
+                                {errorMessages.map((error, index) => (
+                                    <li key={index}>{error}</li>
+                                ))}
+                            </ul>
                         </div>
+                    )}
 
-                        <div>
-                            <label htmlFor="description">Course Description:</label>
-                            <input
-                                id="description"
-                                name="description"
-                                value={this.state.description}
-                                onChange={this.handleChange}
-                            />
-                        </div>
+                    <div>
+                        <label htmlFor='name'>Course Name:</label>
+                        <input
+                            type='text'
+                            id='name'
+                            name='name'
+                            value={formData.name}
+                            onChange={handleChange}
+                        />
+                    </div>
 
-                        <div>
-                            <label htmlFor="registration_day">Registration Day:</label>
-                            <input
-                                type="date"
-                                id="registration_day"
-                                name="registration_day"
-                                value={this.state.registration_day}
-                                onChange={this.handleChange}
-                            />
-                        </div>
+                    <div>
+                        <label htmlFor='description'>Course Description:</label>
+                        <input
+                            id='description'
+                            name='description'
+                            value={formData.description}
+                            onChange={handleChange}
+                        />
+                    </div>
 
-                        <div>
-                            <label htmlFor="institution_id">Institution ID:</label>
-                            <input
-                                type="text"
-                                id="institution_id"
-                                name="institution_id"
-                                value={this.state.institution_id}
-                                onChange={this.handleChange}
-                            />
-                        </div>
+                    <div>
+                        <label htmlFor='registration_day'>Registration Day:</label>
+                        <input
+                            type='date'
+                            id='registration_day'
+                            name='registration_day'
+                            value={formData.registration_day}
+                            onChange={handleChange}
+                        />
+                    </div>
 
-                        <div>
-                            <label htmlFor="requirement">Requirement:</label>
-                            <input
-                                type="text"
-                                id="requirement"
-                                name="requirement"
-                                value={this.state.requirement}
-                                onChange={this.handleChange}
-                            />
-                        </div>
+                    <div>
+                        <label htmlFor='institution_id'>Institution ID:</label>
+                        <input
+                            type='text'
+                            id='institution_id'
+                            name='institution_id'
+                            value={formData.institution_id}
+                            onChange={handleChange}
+                        />
+                    </div>
 
-                        <div>
-                            <label htmlFor="favorite">Favorite:</label>
-                            <select
-                                id="favorite"
-                                name="favorite"
-                                value={this.state.favorite}
-                                onChange={this.handleChange}
-                            >
-                                <option value={true}>Yes</option>
-                                <option value={false}>No</option>
-                            </select>
-                        </div>
+                    <div>
+                        <label htmlFor='requirement'>Requirement:</label>
+                        <input
+                            type='text'
+                            id='requirement'
+                            name='requirement'
+                            value={formData.requirement}
+                            onChange={handleChange}
+                        />
+                    </div>
 
-                        <button type="submit">Crear Curso</button>
-                    </form>
-                </div>
+                    <div>
+                        <label htmlFor='favorite'>Favorite:</label>
+                        <select
+                            id='favorite'
+                            name='favorite'
+                            value={formData.favorite}
+                            onChange={handleChange}
+                        >
+                            <option value={true}>Yes</option>
+                            <option value={false}>No</option>
+                        </select>
+                    </div>
+
+                    <button type='submit'>Crear Curso</button>
+                </form>
+            </div>
             <Footer />
-            </>
-        );
-    }
-}
+        </>
+    );
+};
 
 export default CreateCourse;
