@@ -1,36 +1,37 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import Sidebar from '../SideBard/Sidebard';
 import Footer from '../Footer/Footer';
+import { useNavigate } from 'react-router-dom';
 
-class CreateLocation extends Component {
+const CreateAddresses = () => {
+    const navigate = useNavigate();
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            province: '',
-            canton: '',
-            district: '',
-            neighborhood: '',
-            zip_code: '',
-            errorMessages: [],
-        };
-    }
+    const [formData, setFormData] = useState({
+        province: '',
+        canton: '',
+        district: '',
+        neighborhood: '',
+        zip_code: '',
+    });
 
-    handleChange = (event) => {
+    const [errorMessages, setErrorMessages] = useState([]);
+
+    const handleChange = (event) => {
         const { name, value } = event.target;
-        this.setState({ [name]: value });
+        setFormData({ ...formData, [name]: value });
     };
 
-    handleSubmit = async (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
         const addressData = {
-            province: this.state.province,
-            canton: this.state.canton,
-            district: this.state.district,
-            neighborhood: this.state.neighborhood,
-            zip_code: this.state.zip_code,
+            province: formData.province,
+            canton: formData.canton,
+            district: formData.district,
+            neighborhood: formData.neighborhood,
+            zip_code: formData.zip_code,
         };
+
         try {
             const response = await fetch('http://localhost:3001/api/v1/addresses', {
                 method: 'POST',
@@ -41,24 +42,23 @@ class CreateLocation extends Component {
             });
 
             if (response.ok) {
-                console.log('Curso creado exitosamente');
-                
+                console.log('Ubicación creada exitosamente');
+                navigate("/create-branches");
             } else {
                 if (response.status === 422) {
                     const errorData = await response.json();
                     console.log('Errores de validación:', errorData.error);
-                    this.setState({ errorMessages: errorData.error });
+                    setErrorMessages(errorData.error);
                 } else {
                     const errorText = await response.text();
-                    console.error('Error al crear el curso. Detalles:', errorText);
-
+                    console.error('Error al crear la ubicación. Detalles:', errorText);
                 }
             }
         } catch (error) {
             console.error('Error de red:', error);
         }
 
-        this.setState({
+        setFormData({
             province: '',
             canton: '',
             district: '',
@@ -67,86 +67,83 @@ class CreateLocation extends Component {
         });
     };
 
-    render() {
-        return (
-            <>
-                <div className="main-container">
-
-                    <Sidebar />
-                    <form onSubmit={this.handleSubmit}>
-                        {this.state.errorMessages.length > 0 && (
-                            <div style={{ color: 'red' }}>
-                                <p>Error al crear la ubicación:</p>
-                                <ul>
-                                    {this.state.errorMessages.map((error, index) => (
-                                        <li key={index}>{error}</li>
-                                    ))}
-                                </ul>
-                            </div>
-                        )}
-
-                        <div>
-                            <label htmlFor="province">Province:</label>
-                            <input
-                                type="text"
-                                id="province"
-                                name="province"
-                                value={this.state.province}
-                                onChange={this.handleChange}
-                            />
+    return (
+        <>
+            <div className='main-container'>
+                <Sidebar />
+                <form onSubmit={handleSubmit}>
+                    {errorMessages.length > 0 && (
+                        <div style={{ color: 'red' }}>
+                            <p>Error al crear la ubicación:</p>
+                            <ul>
+                                {errorMessages.map((error, index) => (
+                                    <li key={index}>{error}</li>
+                                ))}
+                            </ul>
                         </div>
+                    )}
 
-                        <div>
-                            <label htmlFor="canton">Canton:</label>
-                            <input
-                                type="text"
-                                id="canton"
-                                name="canton"
-                                value={this.state.canton}
-                                onChange={this.handleChange}
-                            />
-                        </div>
+                    <div>
+                        <label htmlFor='province'>Province:</label>
+                        <input
+                            type='text'
+                            id='province'
+                            name='province'
+                            value={formData.province}
+                            onChange={handleChange}
+                        />
+                    </div>
 
-                        <div>
-                            <label htmlFor="district">District:</label>
-                            <input
-                                type="text"
-                                id="district"
-                                name="district"
-                                value={this.state.district}
-                                onChange={this.handleChange}
-                            />
-                        </div>
+                    <div>
+                        <label htmlFor='canton'>Canton:</label>
+                        <input
+                            type='text'
+                            id='canton'
+                            name='canton'
+                            value={formData.canton}
+                            onChange={handleChange}
+                        />
+                    </div>
 
-                        <div>
-                            <label htmlFor='neighborhood'>Neighborhood:</label>
-                            <input
-                                type="text"
-                                id='neighborhood'
-                                name='neighborhood'
-                                value={this.state.neighborhood}
-                                onChange={this.handleChange}
-                            />
-                        </div>
+                    <div>
+                        <label htmlFor='district'>District:</label>
+                        <input
+                            type='text'
+                            id='district'
+                            name='district'
+                            value={formData.district}
+                            onChange={handleChange}
+                        />
+                    </div>
 
-                        <div>
-                            <label htmlFor="zipCode">Zip Code:</label>
-                            <input
-                                type="text"
-                                id="zip_code"
-                                name="zip_code"
-                                value={this.state.zip_code}
-                                onChange={this.handleChange}
-                            />
-                        </div>
+                    <div>
+                        <label htmlFor='neighborhood'>Neighborhood:</label>
+                        <input
+                            type='text'
+                            id='neighborhood'
+                            name='neighborhood'
+                            value={formData.neighborhood}
+                            onChange={handleChange}
+                        />
+                    </div>
 
-                        <button type="submit">Crear Ubicación</button>
-                    </form>
-                </div>
-                <Footer />
-            </>
-        );
-    }
-}
+                    <div>
+                        <label htmlFor='zipCode'>Zip Code:</label>
+                        <input
+                            type='text'
+                            id='zip_code'
+                            name='zip_code'
+                            value={formData.zip_code}
+                            onChange={handleChange}
+                        />
+                    </div>
 
-export default CreateLocation;
+                    <button type='submit'>Crear Ubicación</button>
+                </form>
+            </div>
+            <Footer />
+        </>
+    );
+};
+
+export default CreateAddresses;

@@ -19,7 +19,7 @@ import CreateLocation from './components/CreateAddress/CreateAddress.jsx';
 import CreateBranch from './components/CreateBranch/CreateBranch.jsx';
 import InstitutionForm from './components/InstitutionForm/InstitutionForm.jsx';
 import CreateCategory from './components/CreateCategory/CreateCategory.jsx';
-
+import CreateCategoryCourse from './components/CreateCategoryCourse/CreateCategoryCourse.jsx';
 
 const App = () => {
   const [currUser, setCurrUser] = useState(null);
@@ -39,10 +39,11 @@ const App = () => {
         <Route path='/delete-course/:selectedId' element={<CourseDelete />} />
         <Route path="/edit-profile/:selectedId" element={<EditProfile />} />
         {/* <Route path="/complete-form" element={<AddEntityForm />} /> */}
-        <Route path='/addresses' element={<CreateLocation />} />
+        <Route path='/create-addresses' element={<CreateLocation />} />
         <Route path='/create-branches' element={<CreateBranch />} />
         <Route path='/institution-form' element={<InstitutionForm />} />
         <Route path='/create-categories' element={<CreateCategory />} />
+        <Route path='/create-category-courses' element={<CreateCategoryCourse />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>

@@ -7,6 +7,7 @@ ruby "3.0.2"
 gem "rails", "~> 7.0.8"
 
 gem 'jwt'
+gem 'will_paginate'
 gem 'devise', '~> 4.2'
 gem 'pundit', '~> 2.3', '>= 2.3.1'
 gem 'rolify', '~> 5.2'

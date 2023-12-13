@@ -65,11 +65,11 @@ const Sidebar = () => {
               </div>
 
               <div>
-                <li> <Link to="/addresses">Add Location</Link> </li>
+                <li> <Link to="/create-addresses">Add Location</Link> </li>
               </div>
 
               <div>
-                <li> <Link to="/branches">add branches</Link> </li>
+                <li> <Link to="/create-branches">add branches</Link> </li>
               </div>
 
               <div>
@@ -80,6 +80,11 @@ const Sidebar = () => {
               <div>
                 <li> <Link to="/create-categories">categories</Link> </li>
               </div>
+
+              <div>
+                <li> <Link to="/create-category-courses">categories Course</Link> </li>
+              </div>
+
               <Logout />
 
 

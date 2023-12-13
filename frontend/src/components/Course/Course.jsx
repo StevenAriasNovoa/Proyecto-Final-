@@ -1,13 +1,13 @@
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import CourseCard from "../CourseCard/CourseCard.jsx";
 import Navbar from "../../components/Navbar/Navbar.jsx";
 import Footer from "../../components/Footer/Footer.jsx";
 import Sidebar from "../../components/SideBard/Sidebard.jsx";
 import CourseEdit from "../CourseEdit/CourseEdit.jsx";
 import Spinner from "../Spinner/Spinner.jsx";
-import { getCourses } from '../../apis/coursesApi.jsx';
+import { getCourses } from '../../apis/CourseApi.jsx';
 import { getCategoryCourses } from '../../apis/CategoryCourseApi.jsx';
+import { fetchInstitutionName } from '../../apis/InstitutionsApi.jsx';
 import "./Course.css";
 
 const Course = () => {
@@ -17,6 +17,7 @@ const Course = () => {
   const [searchCourse, setSearchCourse] = useState('');
   const [loading, setLoading] = useState(false);
   const [categoryCourse, setCategoryCourse] = useState([]);
+  const [institutionName, setInstitutionName] = useState("Nombre no disponible");
 
   const handleCourseClick = (id) => {
     setSelectedId(id);
@@ -56,9 +57,8 @@ const Course = () => {
   }, []);
 
   const normalizedText = (text) => {
-    return text.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); //descomponer los caracterers diacríricos Eliminar caracteres diacríticos
+    return text.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Descomponer los caracteres diacríricos Eliminar caracteres diacríticos
   };
-
 
   const onSearch = () => {
     setLoading(true);
@@ -69,7 +69,6 @@ const Course = () => {
     } else {
       const filteredCourses = courses.filter(course => {
         const termName = normalizedText(course.name).toLowerCase().includes(searchTerm);
-
         const termDescription = normalizedText(course.description).toLowerCase().includes(searchTerm);
 
         return termName || termDescription;
@@ -88,6 +87,22 @@ const Course = () => {
     }
   }, [searchCourse, courses]);
 
+  useEffect(() => {
+    if (selectedId) {
+      const selectedCourse = courses.find(course => course.id === selectedId);
+      if (selectedCourse) {
+        const fetchInstitutionNameData = async (institutionId) => {
+          try {
+            const name = await fetchInstitutionName(institutionId);
+            setInstitutionName(name.name); // Ajusta según tus datos reales
+          } catch (error) {
+            console.error('Error al obtener el nombre de la institución:', error);
+          }
+        };
+        fetchInstitutionNameData(selectedCourse.institutionId); // Ajusta según tus datos reales
+      }
+    }
+  }, [selectedId, courses]);
 
   return (
     <>
@@ -97,11 +112,11 @@ const Course = () => {
           <Sidebar className="barra" />
           <div className="main-content">
             <div className="course-cards-container">
-            <ul>
-                    {categoryCourse.map((category, index) => (
-                      <li key={index}>{category.name}</li>
-                    ))}
-                  </ul>
+              <ul>
+                {categoryCourse.map((category, index) => (
+                  <li key={index}>{category.name}</li>
+                ))}
+              </ul>
               {loading ? (
                 <Spinner />
               ) : (
@@ -114,7 +129,10 @@ const Course = () => {
               )}
               <div>
                 {selectedId && (
-                  <CourseEdit courseId={selectedId} onClose={handleCloseEditForm} />
+                  <>
+                    <p>Institución: {institutionName}</p>
+                    <CourseEdit courseId={selectedId} onClose={handleCloseEditForm} />
+                  </>
                 )}
               </div>
             </div>
@@ -125,7 +143,5 @@ const Course = () => {
     </>
   );
 };
-
-
 
 export default Course;

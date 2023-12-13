@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
-import Footer from "../../components/Footer/Footer.jsx"
-import Logotext from "../../components/Logotext/Logotext.jsx";
+import Footer from "../Footer/Footer.jsx"
+import Logotext from "../Logotext/Logotext.jsx";
 import './Signup.css';
 
 const Signup = ({ setCurrUser, setShow }) => {
@@ -9,7 +9,7 @@ const Signup = ({ setCurrUser, setShow }) => {
     const url = "http://localhost:3000/signup"
     try {
       const response = await fetch(url, {
-        method: 'post',
+        method: 'POST',
         headers: {
           "content-type": 'application/json',
           "accept": "application/json"
@@ -91,7 +91,6 @@ const Signup = ({ setCurrUser, setShow }) => {
 
             <input className="submit" type="submit" value="SignUp" />
           </form>
-
 
           <div className="gotologin">
             ¿Ya tienes una cuenta? <br />

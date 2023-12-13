@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { fetchInstitutionName } from '../../apis/InstitutionsApi.jsx';
 import Card from "react-bootstrap/Card";
 import Spinner from '../Spinner/Spinner.jsx';
 import Sidebar from '../SideBard/Sidebard.jsx';
@@ -8,20 +8,20 @@ import Footer from '../Footer/Footer.jsx';
 import "./CourseInfo.css"
 
 const CourseInfo = () => {
-
   const { selectedId } = useParams();
   const [courseContent, setCourseContent] = useState(null);
-
-  useEffect(() => {
-  }, [selectedId]);
+  const [institutionName, setInstitutionName] = useState(null);
 
   useEffect(() => {
     const fetchDataShow = async () => {
       try {
         const url = `http://localhost:3001/api/v1/courses/${selectedId}`;
         const response = await fetch(url);
-        const data = await response.json();
-        setCourseContent(data);
+        const coursedata = await response.json();
+        setCourseContent(coursedata);
+
+        const institutionData = await fetchInstitutionName(coursedata.institution_id);
+        setInstitutionName(institutionData.name);
       } catch (error) {
         console.error('error al obtener data:', error);
         setCourseContent([]);
@@ -41,7 +41,6 @@ const CourseInfo = () => {
     <>
       <div className="main-container">
         <Sidebar />
-
         <div className="content-container">
           <div className="boxcourse-info">
             <div className="info-container">
@@ -53,7 +52,7 @@ const CourseInfo = () => {
                     <h2>{courseContent.description}</h2>
                   </div>
                   <h2>{courseContent.registration_day}</h2>
-                  <h2>{courseContent.institution_id}</h2>
+                  <h2>{institutionName || 'Nombre no disponible'}</h2>
                 </Card>
               </div>
             </div>

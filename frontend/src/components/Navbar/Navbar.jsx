@@ -6,21 +6,21 @@ import './Navbar.css';
 const Navbar = ({ onSearch }) => {
   const [searchCourse, setSearchCourse] = useState('');
 
-  const handleSearchChange = (event) => {
-    setSearchCourse(event.target.value);
+  const normalizedText = (text) => {
+    return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   };
 
-  const search = () => {
-    if (searchCourse.trim() === '') {  // Si la búsqueda está vacía, cargar todos los cursos
-      
-      onSearch(''); // Llama con una cadena vacía para cargar todos los cursos
-    } else {
-      onSearch(searchCourse.trim()); // Llama a onSearch con el término de búsqueda
-    }
+  const handleSearchChange = (e) => {
+    const textUser = e.target.value;
+    setSearchCourse(normalizedText(textUser)); // Normalizar el texto antes de establecer el estado
+  };
+
+  const searchclick = () => {
+    onSearch(searchCourse);
   };
 
   const detectenter = (e) => {
-    e.key === 'Enter' && search()
+    e.key === 'Enter' && onSearch(searchCourse)
   };
 
   return (
@@ -36,7 +36,7 @@ const Navbar = ({ onSearch }) => {
             onKeyDown={detectenter}
           />
           <button
-            onClick={search}
+            onClick={searchclick}
             className='seeker'
           >Buscar</button>
         </div>

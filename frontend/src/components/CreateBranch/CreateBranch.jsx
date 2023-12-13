@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { getCourses } from '../../apis/coursesApi';
-import { getAddresses } from '../../apis/addressesApi';
+import { getCourses } from '../../apis/CourseApi.jsx';
+import { getAddresses } from '../../apis/AddressesApi.jsx';
 import Sidebar from '../SideBard/Sidebard';
 import Footer from '../Footer/Footer';
+import { useNavigate } from 'react-router-dom';
 
 const CreateBranch = () => {
+    const navigate = useNavigate();
     const [name, setName] = useState('');
     const [courseName, setCourseName] = useState('');
     const [zipCode, setZipCode] = useState('');
     const [errorMessages, setErrorMessages] = useState([]);
     const [courses, setCourses] = useState([]);
     const [addresses, setAddresses] = useState([]);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -19,7 +22,6 @@ const CreateBranch = () => {
                 setCourses(coursesData);
             } catch (error) {
                 console.error('Error al obtener cursos:', error);
-            } finally {
             }
         };
 
@@ -29,51 +31,80 @@ const CreateBranch = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const coursesData = await getAddresses();
-                setCourses(coursesData);
+                const addressesData = await getAddresses();
+                setAddresses(addressesData);
             } catch (error) {
                 console.error('Error al obtener ubicaciones:', error);
-            } finally {
             }
         };
 
         fetchData();
     }, []);
 
+    useEffect(() => {
+        console.log('Name:', name);
+        console.log('Course Name:', courseName);
+        console.log('Zip Code:', zipCode);
+    }, [name, courseName, zipCode]);
+
     const handleChange = (event) => {
         const { name, value } = event.target;
+        let trimmedValue = value.trim(); // Elimina espacios al principio y al final
+
+        if (name === 'zipCode') {
+            // Elimina espacios en el medio
+            trimmedValue = trimmedValue.replace(/\s/g, '');
+        }
+
         switch (name) {
             case 'name':
-                setName(value);
+                setName(trimmedValue);
                 break;
             case 'courseName':
-                setCourseName(value);
+                setCourseName(trimmedValue);
                 break;
-            case 'zip_code':
-                setZipCode(value);
+            case 'zipCode':
+                setZipCode(trimmedValue);
                 break;
             default:
                 break;
         }
     };
+    
+    useEffect(() => {
+        console.log('Addresses:', addresses);
+    }, [addresses]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
+        setIsSubmitting(true);
+
+        console.log('Attempting to submit with zipCode:', zipCode);
+
         const selectedCourse = courses.find(course => course.name === courseName);
         const course_id = selectedCourse ? selectedCourse.id : null;
+
+        console.log('Selected course:', selectedCourse);
+        console.log('Computed course_id:', course_id);
+
 
         const zipCodeAsNumber = Number(zipCode);
         const selectedLocation = addresses.find(address => address.zip_code === zipCodeAsNumber);
         const address_id = selectedLocation ? selectedLocation.id : null;
 
+        console.log('Selected Location:', selectedLocation);
+        console.log('Computed address_id:', address_id);
+
         if (!address_id) {
-            setErrorMessages(['Ubicación no válida. Por favor, ingrese un código postal válido.']);
+            setErrorMessages(['Código postal no válido. Por favor, ingrese un código postal válido.']);
+            setIsSubmitting(false);
             return;
         }
 
         if (!course_id) {
             setErrorMessages(['Nombre de curso no válido. Por favor, elija un curso existente.']);
+            setIsSubmitting(false);
             return;
         }
 
@@ -93,7 +124,12 @@ const CreateBranch = () => {
             });
 
             if (response.ok) {
-                console.log('Branch creado exitosamente');
+                const responseData = await response.json();
+                if (responseData.data) {
+                    // Hacer algo con los datos si es necesario
+                }
+                alert('Branch creado exitosamente');
+                navigate("/create-courses");
             } else {
                 if (response.status === 422) {
                     const errorData = await response.json();
@@ -107,6 +143,8 @@ const CreateBranch = () => {
         } catch (error) {
             console.error('Error de red:', error);
         }
+
+        setIsSubmitting(false);
 
         // Restaurar el estado después de enviar el formulario
         setName('');
@@ -153,17 +191,17 @@ const CreateBranch = () => {
                     </div>
 
                     <div>
-                        <label htmlFor="zip_code">Código Postal:</label>
+                        <label htmlFor="zipCode">Código Postal:</label>
                         <input
                             type="text"
-                            id="zip_code"
-                            name="zip_code"
+                            id="zipCode"
+                            name="zipCode"
                             value={zipCode}
                             onChange={handleChange}
                         />
                     </div>
 
-                    <button type="submit">Crear Branch</button>
+                    <button type="submit" disabled={isSubmitting}>Crear Branch</button>
                 </form>
             </div>
             <Footer />
