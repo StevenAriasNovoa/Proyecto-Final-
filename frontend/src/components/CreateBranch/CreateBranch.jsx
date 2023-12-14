@@ -70,24 +70,24 @@ const CreateBranch = () => {
                 break;
         }
     };
-    
+
     useEffect(() => {
-        console.log('Addresses:', addresses);
-    }, [addresses]);
+        console.log('Courses:', courses);
+    }, [courses]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
         setIsSubmitting(true);
 
-        console.log('Attempting to submit with zipCode:', zipCode);
+        console.log('Intentando enviar con zipCode:', zipCode);
+        console.log('Courses in handleSubmit:', courses);
 
         const selectedCourse = courses.find(course => course.name === courseName);
         const course_id = selectedCourse ? selectedCourse.id : null;
 
         console.log('Selected course:', selectedCourse);
         console.log('Computed course_id:', course_id);
-
 
         const zipCodeAsNumber = Number(zipCode);
         const selectedLocation = addresses.find(address => address.zip_code === zipCodeAsNumber);
@@ -151,6 +151,7 @@ const CreateBranch = () => {
         setCourseName('');
         setZipCode('');
     };
+
 
     return (
         <>

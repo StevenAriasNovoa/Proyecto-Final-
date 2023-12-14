@@ -57,8 +57,6 @@ const CourseInfo = () => {
       <div className="main-container">
         <Sidebar />
         <div className="content-container">
-          <div className="boxcourse-info">
-            <div className="info-container">
               <div key={courseContent?.course.id} className="text-center">
                 <p>{courseContent?.course.id}</p>
                 <h2>{courseContent?.course.name}</h2>
@@ -75,8 +73,6 @@ const CourseInfo = () => {
                     </li>
                   ))}
                 </ul>
-              </div>
-            </div>
           </div>
         </div>
       </div>

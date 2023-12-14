@@ -1,9 +1,6 @@
 
-.content-container {
-    flex: 1;
-    padding: 20px;
-}
 
-.boxcourse-info {
-    margin: 20px;
+.content-container {
+    margin-top: 2%;
+    margin-left: -10%;
 }

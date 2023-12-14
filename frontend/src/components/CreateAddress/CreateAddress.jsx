@@ -42,7 +42,7 @@ const CreateAddresses = () => {
             });
 
             if (response.ok) {
-                console.log('Ubicación creada exitosamente');
+                alert('Ubicación creada exitosamente');
                 navigate("/create-branches");
             } else {
                 if (response.status === 422) {
