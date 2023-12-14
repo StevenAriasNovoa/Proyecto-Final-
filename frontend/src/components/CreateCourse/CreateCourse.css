@@ -1,3 +1,8 @@
+@font-face {
+    font-family: "instrutions";
+    src: url("../../../public/fonts/Classyvogueregular.ttf");
+}
+
 .createcourse {
     background: linear-gradient(to right, #a155c0, #44126b);
     color: #fff;

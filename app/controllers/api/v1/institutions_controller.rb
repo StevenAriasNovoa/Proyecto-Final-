@@ -6,7 +6,10 @@ class Api::V1::InstitutionsController <  ApplicationController
     render json: @institutions
   end
 
-  def show; end
+    def show
+      @institution = Institution.find(params[:id])
+      render json: @institution
+    end
 
 
   def new

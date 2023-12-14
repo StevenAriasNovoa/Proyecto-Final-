@@ -7,7 +7,6 @@ class Course < ApplicationRecord
     has_many :category_courses , dependent: :destroy
     has_many :categories, through: :category_courses
 
-
     validates_presence_of :description, :registration_day, :name
     validates_length_of :name, maximum: 100
     validates_length_of :requirement, maximum: 100

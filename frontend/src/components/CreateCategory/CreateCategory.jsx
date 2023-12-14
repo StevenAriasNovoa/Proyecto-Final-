@@ -1,26 +1,27 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Sidebar from '../SideBard/Sidebard';
 import Footer from '../Footer/Footer';
 
-class CreateCategory extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: '',
-      errorMessages: [],
-    };
-  }
+const CreateCategory = () => {
+  const navigate = useNavigate();
 
-  handleChange = (event) => {
+  const [formData, setFormData] = useState({
+    name: '',
+  });
+
+  const [errorMessages, setErrorMessages] = useState([]);
+
+  const handleChange = (event) => {
     const { name, value } = event.target;
-    this.setState({ [name]: value });
+    setFormData({ ...formData, [name]: value });
   };
 
-  handleSubmit = async (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     const categoryData = {
-      name: this.state.name,
+      name: formData.name,
     };
 
     try {
@@ -33,40 +34,38 @@ class CreateCategory extends Component {
       });
 
       if (response.ok) {
-        console.log("Categoría creada exitosamente");
-
-        // que lo mande al otro formulario 
-        // Puedes hacer algo después de que la categoría se haya creado con éxito
+        alert("Categoría creada exitosamente");
+        setErrorMessages([]); // Clear error messages on success
+        navigate('/create-category-courses'); 
       } else {
         if (response.status === 422) {
           const errorData = await response.json();
           console.log('Errores de validación:', errorData.error);
-          this.setState({ errorMessages: errorData.error });
+          setErrorMessages(errorData.error);
         } else {
           const errorText = await response.text();
-          // console.error('Error al crear la categoría. Detalles:', errorText);
+          console.error('Error al crear la categoría. Detalles:', errorText);
         }
       }
     } catch (error) {
-      // console.error('Error de red:', error);
+      console.error('Error de red:', error);
     }
 
-    this.setState({
+    setFormData({
       name: '',
     });
   };
 
-  render() {
-    return (
-      <>
-            <div className='main-container'>
+  return (
+    <>
+      <div className='main-container'>
         <Sidebar />
-        <form onSubmit={this.handleSubmit}>
-          {this.state.errorMessages.length > 0 && (
+        <form onSubmit={handleSubmit}>
+          {errorMessages.length > 0 && (
             <div style={{ color: "red" }}>
               <p>Error al crear la categoría:</p>
               <ul>
-                {this.state.errorMessages.map((error, index) => (
+                {errorMessages.map((error, index) => (
                   <li key={index}>{error}</li>
                 ))}
               </ul>
@@ -79,19 +78,17 @@ class CreateCategory extends Component {
               type="text"
               id="name"
               name="name"
-              value={this.state.name}
-              onChange={this.handleChange}
+              value={formData.name}
+              onChange={handleChange}
             />
           </div>
 
           <button type="submit">Crear Categoría</button>
         </form>
-
       </div>
-        <Footer />
-      </>
-    );
-  }
-}
+      <Footer />
+    </>
+  );
+};
 
 export default CreateCategory;

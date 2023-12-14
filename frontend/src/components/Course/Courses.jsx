@@ -7,7 +7,7 @@ import Footer from "../Footer/Footer.jsx";
 import Sidebar from "../SideBard/Sidebard.jsx";
 import CourseEdit from "../CourseEdit/CourseEdit.jsx";
 import Spinner from "../Spinner/Spinner.jsx";
-import ButtonPag from "../ButtonPag/ButtonPag.jsx";
+// import ButtonPag from "../ButtonPag/ButtonPag.jsx";
 import CourseCard from "../CourseCard/CourseCard.jsx";
 import "./Courses.css";
 
@@ -19,7 +19,7 @@ const Course = () => {
   const [loading, setLoading] = useState(false);
   const [categoryCourse, setCategoryCourse] = useState([]);
   const [institutionName, setInstitutionName] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);   //manejar el estado de l apagina actual
+  // const [currentPage, setCurrentPage] = useState(1);   //manejar el estado de l apagina actual
 
   const handleCourseClick = (id) => {
     setSelectedId(id);
@@ -124,21 +124,18 @@ const Course = () => {
                 <Spinner />
               ) : (
                 <>
-                  <div className="boxresults">
-                    <CourseCard courses={searchResults} onCourseClick={handleCourseClick} />
-                  </div>
-                  <CourseCard courses={courses} onCourseClick={handleCourseClick} />
+                  <br />
+                  <CourseCard courses={courses.filter(course => !searchResults.includes(course))} onCourseClick={handleCourseClick} />
                 </>
               )}
               <div>
                 {selectedId && (
                   <>
-                    <p>Institución: {institutionName}</p>
+                    <p>edi : {institutionName}</p>
                     <CourseEdit courseId={selectedId} onClose={handleCloseEditForm} />
                   </>
                 )}
               </div>
-              <ButtonPag currentPage={currentPage} onPageChange={setCurrentPage} />
             </div>
           </div>
         </div>

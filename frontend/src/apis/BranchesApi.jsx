@@ -1,13 +1,13 @@
-const Addresses_url = 'http://localhost:3001/api/v1/addresses';
+const Branches_url = 'http://localhost:3001/api/v1/branches';
 
-async function getAddresses() {
+async function getBranches() {
     try {
-        const response = await fetch(Addresses_url);
+        const response = await fetch(Branches_url);
         if (response.ok) {
             const data = await response.json();
             return data;
         } else {
-            console.error('Error al obtener las ubicaciones.');
+            console.error('Error al obtener las categorías.');
             return null;
         }
     } catch (error) {
@@ -16,9 +16,9 @@ async function getAddresses() {
     }
 }
 
-const fetchCourseAddresses = async (courseId) => {
+const fetchCourseBranches = async (courseId) => {
     try {
-        const url = `http://localhost:3001/api/v1/courses/${courseId}/addresses`;
+        const url = `http://localhost:3001/api/v1/courses/${courseId}/branches`;
         const response = await fetch(url);
 
         if (!response.ok) {
@@ -35,4 +35,4 @@ const fetchCourseAddresses = async (courseId) => {
 };
 
 
-export { getAddresses, fetchCourseAddresses };
+export { getBranches, fetchCourseBranches };

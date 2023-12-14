@@ -1,13 +1,44 @@
 class Api::V1::CoursesController < ApplicationController
-  before_action :set_course, only: %i[show  edit update destroy]
+  before_action :set_course, only: %i[show edit update destroy addresses]
 
   def index
-      @courses = Course.all
-      render json: @courses
+    @courses = Course.all
+    # .paginate(page: params[:page], per_page: 12)
+    render json: @courses
   end
 
   def show
-    render json: @course
+    @course = Course.find(params[:id])
+  
+    if @course
+      render json: {
+        course: @course,
+        institution_name: @course.institution&.name,
+        branches: @course.branches.map { |branch| branch.name },
+        categories: @course.categories,
+        addresses: @course.branches.map { |branch| branch.address }
+      }
+    else
+      render json: { error: 'Course not found' }, status: :not_found
+    end
+  end
+
+  def addresses
+    # Lógica para obtener direcciones específicas del curso
+    if @course
+      @addresses = @course.branches.flat_map { |branch| branch.address }
+      render json: @addresses
+    else
+      render json: { error: 'Course not found' }, status: :not_found
+    end
+  end
+
+  def branches
+    # logica para obtener el branch con addreses
+    course = Course.find(params[:id])
+    branches = course.branches.includes(:address)
+
+    render json: branches.as_json(include: { address: { only: [:province, :canton, :district, :neighborhood, :zip_code] } })
   end
 
   def new
@@ -16,48 +47,37 @@ class Api::V1::CoursesController < ApplicationController
 
   def edit; end
 
-  def create
-      @course = Course.new(course_params)
-    
-      if @course.save
-        render json: @course, status: :created
-      else
-        render json: { errors: @course.errors.full_messages }, status: :unprocessable_entity
-      end
-    end
-    
+def create
+  @course = Course.new(course_params)
 
-
-  
-def update
-  if @course.update(course_params)
-    render json: @course, status: :ok
+  if @course.save
+    render json: @course, status: :created
   else
+    Rails.logger.error("Course creation failed. Errors: #{@course.errors.full_messages}")
     render json: { errors: @course.errors.full_messages }, status: :unprocessable_entity
   end
 end
 
+  def update
+    if @course.update(course_params)
+      render json: @course, status: :ok
+    else
+      render json: { errors: @course.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
 
   def destroy
-      @course.destroy
-      render json: { message: "Course was successfully destroyed." }, status: :ok
+    @course.destroy
+    render json: { message: "Course was successfully destroyed." }, status: :ok
   end
 
   private
-  
+
   def set_course
-    begin
       @course = Course.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      render json: { error: 'Course not found' }, status: :not_found
-    rescue StandardError => e
-      render json: { error: "An error occurred: #{e.message}" }, status: :internal_server_error
-    end
   end
-  
 
   def course_params
-      params.require(:course).permit(:name, :description, :registration_day, :institution_id, :requirement, :favorite)
+    params.require(:course).permit(:name, :description, :registration_day, :institution_id, :requirement, :favorite)
   end
-
 end

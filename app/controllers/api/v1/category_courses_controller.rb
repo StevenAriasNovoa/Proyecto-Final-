@@ -17,16 +17,18 @@ class Api::V1::CategoryCoursesController < ApplicationController
   def edit
     # Your code for editing a category_course
   end
+def create
+  # Other code...
 
-  def create
-    @category_course = CategoryCourse.new(category_course_params)
+  @category_course = CategoryCourse.new(category_course_params)
 
-    if @category_course.save
-      render json: @category_course, status: :created
-    else
-      render json: { errors: @category_course.errors.full_messages }, status: :unprocessable_entity
-    end
+  if category_course.valid?
+    category_course.save
+    render json: category_course, status: :created
+  else
+    render json: { error: category_course.errors.full_messages }, status: :unprocessable_entity
   end
+end
 
   def update
     if @category_course.update(category_course_params)
@@ -49,6 +51,6 @@ class Api::V1::CategoryCoursesController < ApplicationController
   end
 
   def category_course_params
-    params.require(:category_course).permit(:category_id, :course_id)
+    params.require(:category_course).permit(:course_id, :category_id)
   end
 end

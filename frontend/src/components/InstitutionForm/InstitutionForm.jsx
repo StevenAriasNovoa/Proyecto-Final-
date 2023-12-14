@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import FlashMessage from 'react-flash-message'
 import Sidebar from '../SideBard/Sidebard';
 import Footer from '../Footer/Footer';
 
@@ -20,6 +21,12 @@ const InstitutionForm = ({ onInstitutionSubmit }) => {
     const handleTypeChange = (selectedType) => {
         setFormData({ ...formData, insti_type: selectedType });
     };
+
+    const Message = () => (
+        <FlashMessage duration={5000}>
+            <strong>Institucion creada exitosamente</strong>
+        </FlashMessage>
+    )
 
     const validateForm = () => {
         const newErrors = {};
@@ -60,7 +67,7 @@ const InstitutionForm = ({ onInstitutionSubmit }) => {
             });
 
             if (response.ok) {
-                alert('Institución creada exitosamente');
+                Message();
                 navigate("/create-course");
             } else {
                 if (response.status === 422) {
