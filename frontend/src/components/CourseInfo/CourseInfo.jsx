@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchInstitutionName } from '../../apis/InstitutionsApi.jsx';
-import Card from "react-bootstrap/Card";
+import { fetchCourseAddresses } from '../../apis/AddressesApi.jsx';
 import Spinner from '../Spinner/Spinner.jsx';
 import Sidebar from '../SideBard/Sidebard.jsx';
 import Footer from '../Footer/Footer.jsx';
 import "./CourseInfo.css"
 
+
 const CourseInfo = () => {
   const { selectedId } = useParams();
-  const [courseContent, setCourseContent] = useState(null);
+  const [courseContent, setCourseContent] = useState({ course: {} });
   const [institutionName, setInstitutionName] = useState(null);
+  const [addressesContent, setAddressesContent] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchDataShow = async () => {
@@ -20,18 +23,29 @@ const CourseInfo = () => {
         const coursedata = await response.json();
         setCourseContent(coursedata);
 
-        const institutionData = await fetchInstitutionName(coursedata.institution_id);
-        setInstitutionName(institutionData.name);
+        // Check if institution_id exists in the nested course property
+        if (coursedata.course && coursedata.course.institution_id) {
+          const institutionData = await fetchInstitutionName(coursedata.course.institution_id);
+          setInstitutionName(institutionData.name);
+        } else {
+          console.log('No institution_id found in coursedata:', coursedata);
+          setInstitutionName("Nombre no disponible");
+        }
+
+        const addressesData = await fetchCourseAddresses(selectedId);
+        setAddressesContent(addressesData);
       } catch (error) {
-        console.error('error al obtener data:', error);
+        console.error('Error fetching data:', error);
         setCourseContent([]);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchDataShow();
   }, [selectedId]);
 
-  if (!courseContent) { // no contenido, hay spinner
+  if (isLoading) { // Show spinner while data is being fetched
     return <div>
       <Spinner />
     </div>;
@@ -44,16 +58,23 @@ const CourseInfo = () => {
         <div className="content-container">
           <div className="boxcourse-info">
             <div className="info-container">
-              <div key={courseContent.id} className="text-center">
-                <Card>
-                  <p>{courseContent.id}</p>
-                  <h2>{courseContent.name}</h2>
-                  <div>
-                    <h2>{courseContent.description}</h2>
-                  </div>
-                  <h2>{courseContent.registration_day}</h2>
-                  <h2>{institutionName || 'Nombre no disponible'}</h2>
-                </Card>
+              <div key={courseContent?.course.id} className="text-center">
+                <p>{courseContent?.course.id}</p>
+                <h2>{courseContent?.course.name}</h2>
+                <div>
+                  <h2>{courseContent?.course.description}</h2>
+                </div>
+                <h2>{courseContent?.course.registration_day}</h2>
+                <h2>{institutionName || 'Nombre no disponible'}</h2>
+                <h2>Direcciones:</h2>
+                <ul>
+                  {addressesContent && addressesContent.map((address, index) => (
+                    <li key={index}>
+                      {`Provincia: ${address.province}, Cantón: ${address.canton}, Distrito: ${address.distrito}, Barrio: ${address.barrio}`}
+                    </li>
+                  ))}
+                </ul>
+
               </div>
             </div>
           </div>

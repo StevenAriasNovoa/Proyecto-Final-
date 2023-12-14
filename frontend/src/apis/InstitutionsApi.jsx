@@ -29,15 +29,14 @@ const fetchInstitutionName = async (institutionId) => {
             throw new Error(errorData.message || 'Error en la respuesta de la API de instituciones');
         }
 
-        const textResponse = await response.text();
+        const data = await response.json();
 
-        if (textResponse.trim() === "") {
-            console.log('La respuesta de la API de instituciones está vacía.');
-            return "Nombre no disponible";
+        if (!data || !data.name) {
+            console.log('La respuesta de la API de instituciones no contiene un nombre válido.');
+            return { name: "Nombre no disponible" };
         }
 
-        const data = await response.json();
-        return data.name;
+        return data;
     } catch (error) {
         console.error('Error al obtener nombre de la institución:', error);
         throw error;

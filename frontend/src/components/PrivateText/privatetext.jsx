@@ -1,54 +1,43 @@
 import { useState, useEffect } from "react";
 
 const PrivateText = ({ currUser }) => {
-  const [message, setMessage] = useState(null);
+    const [message, setMessage] = useState(null);
 
-  const getText = async () => {
-    try {
-      const token = localStorage.getItem("token");
+    const getText = async () => {
+        try {
+            // Obtiene el token almacenado
+            const token = localStorage.getItem("token");
 
-      if (!token) {
-        console.error("No se encontró el token en el almacenamiento local.");
-        return;
-      }
+            const response = await fetch("http://localhost:3001/private/test", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: token,
+                },
+            });
 
-      const tokenSegments = token.split('.');
+            const data = await response.json();
 
-      if (tokenSegments.length !== 3) {
-        return;
-      }
+            if (!response.ok) {
+                throw new Error(data.error);
+            }
 
-      const payload = JSON.parse(atob(tokenSegments[1]));
+            setMessage(data.message);
+        } catch (error) {
+            console.log("Error al obtener el texto privado", error);
+            setMessage(error.message);
+        }
+    };
 
-      const response = await fetch("http://localhost:3001/private/test", {
-        method: "get",
-        headers: {
-          "content-type": "application/json",
-          authorization: `Bearer ${token}`,
-        },
-        credentials: "include",
-      });
 
-      if (!response.ok) {
-        console.log("Error en la respuesta:", response.status);
-        throw new Error("Error en la solicitud");
-      }
+    useEffect(() => {
+        // Llama a getText cuando currUser cambia
+        if (currUser) {
+            getText();
+        }
+    }, [currUser]);
 
-      const data = await response.json();
-      setMessage(data.message);
-    } catch (error) {
-      console.log("Error en la solicitud:", error);
-      setMessage(null);
-    }
-  };
-
-  useEffect(() => {
-    if (currUser) {
-      getText();
-    }
-  }, [currUser]);
-
-  return <div>{message}</div>;
+    return <div>{message}</div>;
 };
 
 export default PrivateText;

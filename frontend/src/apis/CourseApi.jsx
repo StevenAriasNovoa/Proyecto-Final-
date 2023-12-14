@@ -1,8 +1,9 @@
-const Course_url = 'http://localhost:3001/api/v1/courses';
+const CourseUrl = 'http://localhost:3001/api/v1/courses';
 
-async function getCourses() {
+async function getCourses(page) {
     try {
-        const response = await fetch(Course_url);
+        const response = await fetch(`${CourseUrl}?page=${page}`);
+        //agrega el parametro de la pagina de la lista de cursos
         if (response.ok) {
             const data = await response.json();
             return data;

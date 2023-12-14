@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useState } from 'react';
-import Course from './components/Course/Course.jsx';
+import Course from './components/Course/Courses.jsx';
 import User from './components/User/User.jsx';
 import NotFound from './pages/NotFound/Notfound.jsx';
 import Profile from './components/Profile/Profile.jsx';

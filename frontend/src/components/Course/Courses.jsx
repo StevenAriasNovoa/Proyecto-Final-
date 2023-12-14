@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
-import CourseCard from "../CourseCard/CourseCard.jsx";
-import Navbar from "../../components/Navbar/Navbar.jsx";
-import Footer from "../../components/Footer/Footer.jsx";
-import Sidebar from "../../components/SideBard/Sidebard.jsx";
-import CourseEdit from "../CourseEdit/CourseEdit.jsx";
-import Spinner from "../Spinner/Spinner.jsx";
 import { getCourses } from '../../apis/CourseApi.jsx';
 import { getCategoryCourses } from '../../apis/CategoryCourseApi.jsx';
 import { fetchInstitutionName } from '../../apis/InstitutionsApi.jsx';
-import "./Course.css";
+import Navbar from "../Navbar/Navbar.jsx";
+import Footer from "../Footer/Footer.jsx";
+import Sidebar from "../SideBard/Sidebard.jsx";
+import CourseEdit from "../CourseEdit/CourseEdit.jsx";
+import Spinner from "../Spinner/Spinner.jsx";
+import ButtonPag from "../ButtonPag/ButtonPag.jsx";
+import CourseCard from "../CourseCard/CourseCard.jsx";
+import "./Courses.css";
 
 const Course = () => {
   const [selectedId, setSelectedId] = useState(null);
@@ -17,7 +18,8 @@ const Course = () => {
   const [searchCourse, setSearchCourse] = useState('');
   const [loading, setLoading] = useState(false);
   const [categoryCourse, setCategoryCourse] = useState([]);
-  const [institutionName, setInstitutionName] = useState("Nombre no disponible");
+  const [institutionName, setInstitutionName] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);   //manejar el estado de l apagina actual
 
   const handleCourseClick = (id) => {
     setSelectedId(id);
@@ -31,8 +33,8 @@ const Course = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const coursesData = await getCourses();
-        setCourses(coursesData);
+        const coursesData = await getCourses(1);
+        setCourses(coursesData || []);
       } catch (error) {
         console.error('Error al obtener cursos:', error);
       } finally {
@@ -104,6 +106,7 @@ const Course = () => {
     }
   }, [selectedId, courses]);
 
+
   return (
     <>
       <div className="boss">
@@ -135,6 +138,7 @@ const Course = () => {
                   </>
                 )}
               </div>
+              <ButtonPag currentPage={currentPage} onPageChange={setCurrentPage} />
             </div>
           </div>
         </div>

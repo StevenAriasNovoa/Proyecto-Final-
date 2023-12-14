@@ -1,4 +1,3 @@
-// services/categoryApi.js
 const Category_url = 'http://localhost:3001/api/v1/categories';
 
 async function getCategories() {
