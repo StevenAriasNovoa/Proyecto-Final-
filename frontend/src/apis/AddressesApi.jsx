@@ -15,7 +15,7 @@ async function getAddresses() {
         return null;
     }
 }
-const fetchCourseAddresses = async (courseId) => {
+ const fetchCourseAddresses = async (courseId) => {
     try {
         const url = `http://localhost:3001/api/v1/courses/${courseId}/addresses`;
         const response = await fetch(url);

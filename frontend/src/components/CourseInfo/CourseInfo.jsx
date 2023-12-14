@@ -7,12 +7,11 @@ import Sidebar from '../SideBard/Sidebard.jsx';
 import Footer from '../Footer/Footer.jsx';
 import "./CourseInfo.css"
 
-
 const CourseInfo = () => {
   const { selectedId } = useParams();
   const [courseContent, setCourseContent] = useState({ course: {} });
   const [institutionName, setInstitutionName] = useState(null);
-  const [addressesContent, setAddressesContent] = useState(null);
+  const [addressesContent, setAddressesContent] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -47,7 +46,9 @@ const CourseInfo = () => {
 
   if (isLoading) { // Show spinner while data is being fetched
     return <div>
+    <Sidebar />
       <Spinner />
+    <Footer />
     </div>;
   }
 
@@ -68,13 +69,12 @@ const CourseInfo = () => {
                 <h2>{institutionName || 'Nombre no disponible'}</h2>
                 <h2>Direcciones:</h2>
                 <ul>
-                  {addressesContent && addressesContent.map((address, index) => (
+                  {addressesContent.map((address, index) => (
                     <li key={index}>
-                      {`Provincia: ${address.province}, Cantón: ${address.canton}, Distrito: ${address.distrito}, Barrio: ${address.barrio}`}
+                      {`Dirección: ${[address.province, address.canton, address.distrito, address.neighborhood,address.zip_code].join(', ')}`}
                     </li>
                   ))}
                 </ul>
-
               </div>
             </div>
           </div>

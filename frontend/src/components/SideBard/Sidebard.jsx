@@ -31,9 +31,6 @@ const Sidebar = () => {
                 </svg>
                 <li><Link to="/">Inicio</Link></li>
               </div>
-              <div className="description">
-                <p>Explora cursos disponibles</p>
-              </div>
 
               <div className="boxlinks">
                 <svg className="iconsidebar" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" viewBox="0 0 16 16">
@@ -46,7 +43,7 @@ const Sidebar = () => {
                 <svg className="iconsidebar" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" viewBox="0 0 16 16">
                   <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
                 </svg>
-                <li><Link to="/Profile">Profile</Link></li>
+                <li><Link to="/Profile">Perfil</Link></li>
               </div>
 
               <div className="boxlinks">
@@ -54,35 +51,50 @@ const Sidebar = () => {
                   <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
                   <path d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
                 </svg>
-                <li><Link to="/edit-profile/:selectedId"> Edit profile</Link></li>
+                <li><Link to="/edit-profile/:selectedId">Edita tu perfil</Link></li>
               </div>
 
               <div className="boxlinks">
                 <svg className="iconsidebar" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" viewBox="0 0 16 16">
                   <path d="M0 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z" />
                 </svg>
-                <li><Link to="/create-course">Add Curso</Link></li>
+                <li><Link to="/create-course">Agrega Cursos</Link></li>
               </div>
 
-              <div>
-                <li> <Link to="/create-addresses">Add Location</Link> </li>
+              <div className="boxlinks">
+               <svg className="iconsidebar" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M0 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z" />
+                </svg>
+                <li> <Link to="/create-addresses">Agrega Ubicacion</Link> </li>
               </div>
 
-              <div>
-                <li> <Link to="/create-branches">add branches</Link> </li>
+              <div className="boxlinks">
+               <svg className="iconsidebar" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M0 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z" />
+                </svg>
+                <li> <Link to="/create-branches">Agrega Sedes</Link> </li>
               </div>
 
-              <div>
-                <li> <Link to="/institution-form">institution</Link> </li>
+              <div className="boxlinks">
+               <svg className="iconsidebar" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M0 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z" />
+                </svg>
+                <li> <Link to="/institution-form">Agrega Instucion</Link> </li>
               </div>
 
 
-              <div>
-                <li> <Link to="/create-categories">categories</Link> </li>
+              <div className="boxlinks">
+               <svg className="iconsidebar" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M0 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z" />
+                </svg>
+                <li> <Link to="/create-categories">Agrega categoria</Link> </li>
               </div>
 
-              <div>
-                <li> <Link to="/create-category-courses">categories Course</Link> </li>
+              <div className="boxlinks">
+               <svg className="iconsidebar" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M0 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z" />
+                </svg>
+                <li> <Link to="/create-category-courses">enlaza tu categria a tu curso</Link> </li>
               </div>
 
               <Logout />

@@ -146,7 +146,7 @@ class CreateCourse extends Component {
                                     </select>
                                 </div>
 
-                                <button className='createcourse' type="submit">Crear Branch</button>
+                                <button className='createcourse' type="submit">Crear curso</button>
                             </div>
                         </div>
                     </form>
