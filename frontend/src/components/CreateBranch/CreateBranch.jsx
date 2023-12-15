@@ -129,7 +129,7 @@ const CreateBranch = () => {
                     // Hacer algo con los datos si es necesario
                 }
                 alert('Branch creado exitosamente');
-                navigate("/create-courses");
+                navigate("/create-category-course");
             } else {
                 if (response.status === 422) {
                     const errorData = await response.json();
@@ -158,56 +158,63 @@ const CreateBranch = () => {
             <div className='main-container'>
                 <Sidebar />
                 <form onSubmit={handleSubmit}>
-                    {errorMessages.length > 0 && (
-                        <div style={{ color: 'red' }}>
-                            <p>Error al crear el branch:</p>
-                            <ul>
-                                {errorMessages.map((error, index) => (
-                                    <li key={index}>{error}</li>
-                                ))}
-                            </ul>
+                    <h2 className='instrutions-tittle'>Crear un Nuevo Curso</h2>
+                    <div className='box-fromscourse'>
+                        <div>
+                            {errorMessages.length > 0 && (
+                                <div style={{ color: 'red' }}>
+                                    <p>Error al crear el curso:</p>
+                                    <ul>
+                                        {errorMessages.map((error, index) => (
+                                            <li key={index}>{error}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+
+                            <div className='formcourses' >
+                                <label className='instrutions' htmlFor="name">Nombre del Branch:</label>
+                                <input
+                                    className='datacourse'
+                                    type="text"
+                                    id="name"
+                                    name="name"
+                                    value={name}
+                                    onChange={handleChange}
+                                />
+                            </div>
+
+                            <div className='formcourses'>
+                                <label className='instrutions' htmlFor="courseName">Nombre del Curso:</label>
+                                <input
+                                    className='datacourse'
+                                    type="text"
+                                    id="courseName"
+                                    name="courseName"
+                                    value={courseName}
+                                    onChange={handleChange}
+                                />
+                            </div>
+
+                            <div className='formcourses' >
+                                <label className='instrutions' htmlFor="zipCode">Código Postal:</label>
+                                <input
+                                    className='datacourse'
+                                    type="text"
+                                    id="zipCode"
+                                    name="zipCode"
+                                    value={zipCode}
+                                    onChange={handleChange}
+                                />
+                            </div>
+
+                            <div className='move'>
+                                <button className='createinfo-relations' type="submit" disabled={isSubmitting}>Crear Branch</button>
+                            </div>
                         </div>
-                    )}
-
-                    <div className='from-infoofcourse'>
-                        <label className='instrutions' htmlFor="name">Nombre del Branch:</label>
-                        <input
-                            type="text"
-                            id="name"
-                            name="name"
-                            value={name}
-                            onChange={handleChange}
-                        />
                     </div>
-
-                    <div className='from-infoofcourse'>
-                        <label className='instrutions' htmlFor="courseName">Nombre del Curso:</label>
-                        <input
-                            type="text"
-                            id="courseName"
-                            name="courseName"
-                            value={courseName}
-                            onChange={handleChange}
-                        />
-                    </div>
-
-                    <div className='from-infoofcourse'>
-                        <label className='instrutions' htmlFor="zipCode">Código Postal:</label>
-                        <input
-                            type="text"
-                            id="zipCode"
-                            name="zipCode"
-                            value={zipCode}
-                            onChange={handleChange}
-                        />
-                    </div>
-
-                    <div className='move'>
-                        <button className='createinfo-relations' type="submit" disabled={isSubmitting}>Crear Branch</button>
-                    </div>
-
-                </form>
-            </div>
+                </form >
+            </div >
             <Footer />
         </>
     );

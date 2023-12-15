@@ -26,11 +26,11 @@ const InstitutionForm = ({ onInstitutionSubmit }) => {
         const newErrors = {};
 
         if (!formData.name.trim()) {
-            newErrors.name = 'El nombre es obligatorio';
+            newErrors.name = 'Name is required';
         }
 
         if (!formData.insti_type) {
-            newErrors.insti_type = 'Seleccione un tipo de institución';
+            newErrors.insti_type = 'Select an institution type';
         }
 
         setErrors(newErrors);
@@ -42,7 +42,7 @@ const InstitutionForm = ({ onInstitutionSubmit }) => {
         event.preventDefault();
 
         if (!validateForm()) {
-            // Formulario no válido, no enviar la solicitud
+            // Form is not valid, do not submit the request
             return;
         }
 
@@ -61,29 +61,29 @@ const InstitutionForm = ({ onInstitutionSubmit }) => {
             });
 
             if (response.ok) {
-                alert("institucion creada exitosamente");
+                alert("Institution created successfully");
                 navigate("/create-course");
             } else {
                 if (response.status === 422) {
                     const errorData = await response.json();
-                    console.log('Errores de validación:', errorData.error);
+                    console.log('Validation errors:', errorData.error);
                     setErrors(errorData.error);
                 } else {
                     const errorText = await response.text();
-                    console.error('Error al crear la institución. Detalles:', errorText);
+                    console.error('Error creating institution. Details:', errorText);
                 }
             }
         } catch (error) {
-            console.error('Error de red:', error);
+            console.error('Network error:', error);
         }
 
-        // Limpiar el formulario después del envío exitoso o manejar errores
+        // Clear the form after successful submission or handle errors
         setFormData({
             name: '',
             insti_type: '',
         });
 
-        // Si se proporciona una función de devolución de llamada, llámala con los datos de la institución
+        // If a callback function is provided, call it with the institution data
         if (onInstitutionSubmit) {
             onInstitutionSubmit(formData);
         }
@@ -94,10 +94,11 @@ const InstitutionForm = ({ onInstitutionSubmit }) => {
             <div className='main-container'>
                 <Sidebar />
                 <form onSubmit={handleSubmit}>
-                    <div className='from-infoofcourse'>
-                        <label className='instrutions' htmlFor="name">Nombre de la Institución:</label>
+
+                    <div className='formcourses'>
+                        <label className='instrutions' htmlFor="name">Institution Name:</label>
                         <input
-                            className='datarelations'
+                            className='datacourse'
                             type="text"
                             id="name"
                             name="name"
@@ -107,24 +108,25 @@ const InstitutionForm = ({ onInstitutionSubmit }) => {
                         {errors.name && <p className="error-message">{errors.name}</p>}
                     </div>
 
-                    <div className='from-infoofcourse'>
-                        <label className='instrutions' htmlFor="type">Tipo de Institución:</label>
+                    <div className='formcourses'>
+                        <label className='instrutions' htmlFor="type">Institution Type:</label>
                         <select
+                            className='datacourse'
                             id="type"
                             name="type"
                             value={formData.insti_type}
                             onChange={(e) => handleTypeChange(e.target.value)}
                         >
-                            <option value="">Seleccionar Tipo</option>
-                            <option value="colegio">Colegio</option>
-                            <option value="universidad">Universidad</option>
-                            <option value="instituto">Instituto</option>
+                            <option value="">Select Type</option>
+                            <option value="college">College</option>
+                            <option value="university">University</option>
+                            <option value="institute">Institute</option>
                         </select>
                         {errors.insti_type && <p className="error-message">{errors.insti_type}</p>}
                     </div>
 
-                    <div className='move'> 
-                    <button className='createinfo-relations' type="submit">Agregar Institución</button>
+                    <div className='move'>
+                        <button className='createinfo-relations' type="submit">Add Institution</button>
                     </div>
                 </form>
             </div>

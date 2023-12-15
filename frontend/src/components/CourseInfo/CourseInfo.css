@@ -1,48 +1,39 @@
-@font-face {
-    font-family: "fontdescription";
-    src: url("../../../public/fonts/OpenSerif-Book.ttf");
-}
-
-@font-face {
-    font-family: "namecourse";
-    src: url("../../../public/fonts/AppleGaramond-Light.ttf");
-}
-
-
-.content-container {
-    margin-top: 2%;
-    margin-left: -10%;
+.main-container {
+    display: flex;
 }
 
 .content-container {
-    padding: 15px;
-    border: 1px solid #333;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 400%;
+    flex-grow: 1;
+    padding: 20px;
 }
 
-#namecourse {
-    font-family: "namecourse";
-    font-size: 300%;
-    margin-left: 13%;
-    margin-top: -0.8%;
-    color: #000053;
+.boxcourse-info {
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
 }
 
-.course-information {
-    font-family: "fontdescription";
-    color: #333;
-    font-size: 16px;
-    margin-top: 10px;
+.info-container {
+    text-align: center;
 }
 
-.address-list {
-    font-family: "fontdescription";
+.info-container h2 {
+    margin: 10px 0;
+    font-size: 1.5em;
+}
+
+.info-container p {
+    margin: 5px 0;
+    font-size: 1,5em;
+}
+
+ul {
     list-style-type: none;
+    padding: 0;
+    margin: 10px 0;
 }
 
-#boxid {
-    margin-top: -7%;
-    margin-left: -1%;
+li {
+    margin-bottom: 5px;
 }

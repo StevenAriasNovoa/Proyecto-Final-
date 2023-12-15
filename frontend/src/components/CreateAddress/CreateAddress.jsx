@@ -72,74 +72,85 @@ const CreateAddresses = () => {
             <div className='main-container'>
                 <Sidebar />
                 <form onSubmit={handleSubmit}>
-                    {errorMessages.length > 0 && (
-                        <div style={{ color: 'red' }}>
-                            <p>Error al crear la ubicación:</p>
-                            <ul>
-                                {errorMessages.map((error, index) => (
-                                    <li key={index}>{error}</li>
-                                ))}
-                            </ul>
+                    <h2 className='instrutions-tittle'>Crear un Nueva Sede</h2>
+                    <div className='box-fromscourse'>
+                        <div>
+                            {errorMessages.length > 0 && (
+                                <div style={{ color: 'red' }}>
+                                    <p>Error al crear el curso:</p>
+                                    <ul>
+                                        {errorMessages.map((error, index) => (
+                                            <li key={index}>{error}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+
+
+                            <div className='formcourses'>
+                                <label className='instrutions' htmlFor='province'>Province:</label>
+                                <input
+                                    className='datacourse'
+                                    type='text'
+                                    id='province'
+                                    name='province'
+                                    value={formData.province}
+                                    onChange={handleChange}
+                                />
+                            </div>
+
+                            <div className='formcourses'>
+                                <label className='instrutions' htmlFor='canton'>Canton:</label>
+                                <input
+                                    className='datacourse'
+                                    type='text'
+                                    id='canton'
+                                    name='canton'
+                                    value={formData.canton}
+                                    onChange={handleChange}
+                                />
+                            </div>
+
+                            <div className='formcourses'>
+                                <label className='instrutions' htmlFor='district'>District:</label>
+                                <input
+                                    className='datacourse'
+                                    type='text'
+                                    id='district'
+                                    name='district'
+                                    value={formData.district}
+                                    onChange={handleChange}
+                                />
+                            </div>
+
+                            <div className='formcourses' >
+                                <label className='instrutions' htmlFor='neighborhood'>Neighborhood:</label>
+                                <input
+                                    className='datacourse'
+                                    type='text'
+                                    id='neighborhood'
+                                    name='neighborhood'
+                                    value={formData.neighborhood}
+                                    onChange={handleChange}
+                                />
+                            </div>
+
+                            <div className='formcourses'>
+                                <label className='instrutions' htmlFor='zipCode'>Zip Code:</label>
+                                <input
+                                    type='text'
+                                    className='datacourse'
+                                    id='zip_code'
+                                    name='zip_code'
+                                    value={formData.zip_code}
+                                    onChange={handleChange}
+                                />
+                            </div>
+
+                            <div className='move'>
+                                <button className='createinfo-relations' type='submit'>Crear Ubicación</button>
+                            </div>
                         </div>
-                    )}
-
-                    <div className='from-infoofcourse'>
-                        <label className='instrutions' htmlFor='province'>Province:</label>
-                        <input
-                            type='text'
-                            id='province'
-                            name='province'
-                            value={formData.province}
-                            onChange={handleChange}
-                        />
-                    </div>
-
-                    <div className='from-infoofcourse'>
-                        <label className='instrutions' htmlFor='canton'>Canton:</label>
-                        <input
-                            type='text'
-                            id='canton'
-                            name='canton'
-                            value={formData.canton}
-                            onChange={handleChange}
-                        />
-                    </div>
-
-                    <div className='from-infoofcourse'>
-                        <label className='instrutions' htmlFor='district'>District:</label>
-                        <input
-                            type='text'
-                            id='district'
-                            name='district'
-                            value={formData.district}
-                            onChange={handleChange}
-                        />
-                    </div>
-
-                    <div className='from-infoofcourse'>
-                        <label className='instrutions' htmlFor='neighborhood'>Neighborhood:</label>
-                        <input
-                            type='text'
-                            id='neighborhood'
-                            name='neighborhood'
-                            value={formData.neighborhood}
-                            onChange={handleChange}
-                        />
-                    </div>
-
-                    <div className='from-infoofcourse'>
-                        <label className='instrutions' htmlFor='zipCode'>Zip Code:</label>
-                        <input
-                            type='text'
-                            id='zip_code'
-                            name='zip_code'
-                            value={formData.zip_code}
-                            onChange={handleChange}
-                        />
-                    </div>
-
-                    <div className='move'>
-                    <button className='createinfo-relations' type='submit'>Crear Ubicación</button>
                     </div>
                 </form>
             </div>

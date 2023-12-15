@@ -81,12 +81,12 @@ const CreateCourse = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ course: courseData }), // Cambiado de branch a course
+                body: JSON.stringify({ course: courseData }), 
             });
 
             if (response.ok) {
                 alert('Curso creado exitosamente');
-                navigate("/create-addresses")
+                navigate("/create-addresses");
             } else {
                 if (response.status === 422) {
                     const errorData = await response.json();

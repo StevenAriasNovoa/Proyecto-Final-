@@ -3,7 +3,7 @@
     src: url("../../../public/fonts/Classyvogueregular.ttf");
 }
 
-.createcourse {
+.dataofcourse {
     background: linear-gradient(to right, #a155c0, #44126b);
     color: #fff;
     border: none;
@@ -12,7 +12,7 @@
     cursor: pointer;
 }
 
-.createcourse:hover {
+.dataofcourse:hover {
     box-shadow: 10px 10px 10px #44126b;
 }
 

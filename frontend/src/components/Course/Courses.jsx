@@ -111,10 +111,13 @@ const Course = () => {
     <>
       <div className="boss">
         <Navbar onSearch={(term) => setSearchCourse(term)} />
-        <div className="course-container">
+        <div className="boxofcourses">
           <Sidebar className="barra" />
           <div className="main-content">
             <div className="course-cards-container">
+                <div className="boxresults">
+                  <CourseCard courses={searchResults} onCourseClick={handleCourseClick} />
+                </div>
               <ul>
                 {categoryCourse.map((category, index) => (
                   <li key={index}>{category.name}</li>
@@ -125,7 +128,7 @@ const Course = () => {
               ) : (
                 <>
                   <br />
-                  <CourseCard courses={courses.filter(course => !searchResults.includes(course))} onCourseClick={handleCourseClick} />
+                  <CourseCard courses={courses} onCourseClick={handleCourseClick} />
                 </>
               )}
               <div>

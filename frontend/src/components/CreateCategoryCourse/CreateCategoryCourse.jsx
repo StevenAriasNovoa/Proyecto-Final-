@@ -8,12 +8,15 @@ const CreateCategoryCourse = () => {
     const [errorMessages, setErrorMessages] = useState([]);
     const [courses, setCourses] = useState([]);
     const [categories, setCategories] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
+        const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+
         const fetchData = async () => {
             try {
-                const coursesResponse = await fetch('http://localhost:3001/api/v1/courses');
-                const categoriesResponse = await fetch('http://localhost:3001/api/v1/categories');
+                const coursesResponse = await fetch(`${apiUrl}/api/v1/courses`);
+                const categoriesResponse = await fetch(`${apiUrl}/api/v1/categories`);
                 if (coursesResponse.ok && categoriesResponse.ok) {
                     const coursesData = await coursesResponse.json();
                     const categoriesData = await categoriesResponse.json();
@@ -42,8 +45,12 @@ const CreateCategoryCourse = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
+        setLoading(true);
+
+        // Client-side validation
         if (!courseName.trim() || !categoriesName.trim()) {
             setErrorMessages(['Por favor, complete todos los campos.']);
+            setLoading(false);
             return;
         }
 
@@ -55,6 +62,7 @@ const CreateCategoryCourse = () => {
 
         if (!course_id) {
             setErrorMessages(['Nombre de curso no válido. Por favor, elija un curso existente.']);
+            setLoading(false);
             return;
         }
 
@@ -64,7 +72,8 @@ const CreateCategoryCourse = () => {
         };
 
         try {
-            const response = await fetch('http://localhost:3001/api/v1/category_courses', {
+            const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+            const response = await fetch(`${apiUrl}/api/v1/category_courses`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -90,6 +99,7 @@ const CreateCategoryCourse = () => {
 
         setCourseName('');
         setCategoriesName('');
+        setLoading(false);
     };
 
     return (
@@ -97,41 +107,51 @@ const CreateCategoryCourse = () => {
             <div className='main-container'>
                 <Sidebar />
                 <form onSubmit={handleSubmit}>
-                    {errorMessages.length > 0 && (
-                        <div style={{ color: 'red' }}>
-                            <p>Error al crear el Category Course:</p>
-                            <ul>
-                                {errorMessages.map((error, index) => (
-                                    <li key={index}>{error}</li>
-                                ))}
-                            </ul>
+                    <h2 className='instrutions-tittle'>Enlaza tu curso para mejor promocion y datos</h2>
+                    <h2 className='instrutions-tittle'>Crear un Nueva Categoria del Curso </h2>
+                    <div className='box-fromscourse'>
+                        <div>
+                            {errorMessages.length > 0 && (
+                                <div style={{ color: 'red' }}>
+                                    <p>Error al crear el curso:</p>
+                                    <ul>
+                                        {errorMessages.map((error, index) => (
+                                            <li key={index}>{error}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+
+
+                            <div className='formcourses' >
+                                <label className='instrutions' htmlFor="courseName">Nombre del Curso:</label>
+                                <input
+                                    className='datacourse'
+                                    type="text"
+                                    id="courseName"
+                                    name="courseName"
+                                    value={courseName}
+                                    onChange={handleChange}
+                                />
+                            </div>
+
+                            <div className='formcourses'>
+                                <label className='instrutions' htmlFor="categoriesName">Categoría:</label>
+                                <input
+                                    className='datacourse'
+                                    type="text"
+                                    id="categoriesName"
+                                    name="categoriesName"
+                                    value={categoriesName}
+                                    onChange={handleChange}
+                                />
+                            </div>
+
+                            <button className='createinfo-relations' type="submit" disabled={loading}>
+                                {loading ? 'Cargando...' : 'Crear Category Course'}
+                            </button>
                         </div>
-                    )}
-
-                    <div className='from-infoofcourse'>
-                        <label className='instrutions'>Nombre del Curso:</label>
-                        <input
-                            type="text"
-                            id="courseName"
-                            name="courseName"
-                            value={courseName}
-                            onChange={handleChange}
-                        />
                     </div>
-
-                    <div className='from-infoofcourse'>
-
-                        <label className='instrutions'>Categoría:</label>
-                        <input
-                            type="text"
-                            id="categoriesName"
-                            name="categoriesName"
-                            value={categoriesName}
-                            onChange={handleChange}
-                        />
-                    </div>
-
-                    <button className='createinfo-relations' type="submit">Crear Category Course</button>
                 </form>
             </div>
             <Footer />

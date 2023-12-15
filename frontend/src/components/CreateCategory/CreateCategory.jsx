@@ -61,29 +61,36 @@ const CreateCategory = () => {
       <div className='main-container'>
         <Sidebar />
         <form onSubmit={handleSubmit}>
-          {errorMessages.length > 0 && (
-            <div style={{ color: "red" }}>
-              <p>Error al crear la categoría:</p>
-              <ul>
-                {errorMessages.map((error, index) => (
-                  <li key={index}>{error}</li>
-                ))}
-              </ul>
+          <h2 className='instrutions-tittle'>Crear un Nuevo Curso</h2>
+          <div className='box-fromscourse'>
+            <div>
+              {errorMessages.length > 0 && (
+                <div style={{ color: 'red' }}>
+                  <p>Error al crear el curso:</p>
+                  <ul>
+                    {errorMessages.map((error, index) => (
+                      <li key={index}>{error}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+
+              <div className='formcourses' >
+                <label cclassName='instrutions' htmlFor="name">Nombre de la Categoría:</label>
+                <input
+                  className='datacourse'
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <button className='createinfo-relations' type="submit">Crear Categoría</button>
             </div>
-          )}
-
-          <div className='from-infoofcourse'>
-            <label className='instrutions' htmlFor="name">Nombre de la Categoría:</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-            />
           </div>
-
-          <button className='createinfo-relations' type="submit">Crear Categoría</button>
         </form>
       </div>
       <Footer />

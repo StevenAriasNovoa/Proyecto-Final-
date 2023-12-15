@@ -1,7 +1,9 @@
 import React from 'react';
 
-export default function EditProfile() {
+function EditProfile() {
   return (
     <div className='main-container'>EditPorfile</div>
   )
 }
+
+export default EditProfile;
