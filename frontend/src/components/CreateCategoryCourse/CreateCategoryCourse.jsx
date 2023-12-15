@@ -108,7 +108,7 @@ const CreateCategoryCourse = () => {
                         </div>
                     )}
 
-                    <div>
+                    <div className='from-infoofcourse'>
                         <label className='instrutions'>Nombre del Curso:</label>
                         <input
                             type="text"
@@ -119,7 +119,8 @@ const CreateCategoryCourse = () => {
                         />
                     </div>
 
-                    <div>
+                    <div className='from-infoofcourse'>
+
                         <label className='instrutions'>Categoría:</label>
                         <input
                             type="text"
@@ -130,7 +131,7 @@ const CreateCategoryCourse = () => {
                         />
                     </div>
 
-                    <button type="submit">Crear Category Course</button>
+                    <button className='createinfo-relations' type="submit">Crear Category Course</button>
                 </form>
             </div>
             <Footer />

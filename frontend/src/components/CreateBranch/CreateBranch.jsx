@@ -169,8 +169,8 @@ const CreateBranch = () => {
                         </div>
                     )}
 
-                    <div>
-                        <label htmlFor="name">Nombre del Branch:</label>
+                    <div className='from-infoofcourse'>
+                        <label className='instrutions' htmlFor="name">Nombre del Branch:</label>
                         <input
                             type="text"
                             id="name"
@@ -180,8 +180,8 @@ const CreateBranch = () => {
                         />
                     </div>
 
-                    <div>
-                        <label htmlFor="courseName">Nombre del Curso:</label>
+                    <div className='from-infoofcourse'>
+                        <label className='instrutions' htmlFor="courseName">Nombre del Curso:</label>
                         <input
                             type="text"
                             id="courseName"
@@ -191,8 +191,8 @@ const CreateBranch = () => {
                         />
                     </div>
 
-                    <div>
-                        <label htmlFor="zipCode">Código Postal:</label>
+                    <div className='from-infoofcourse'>
+                        <label className='instrutions' htmlFor="zipCode">Código Postal:</label>
                         <input
                             type="text"
                             id="zipCode"
@@ -202,7 +202,10 @@ const CreateBranch = () => {
                         />
                     </div>
 
-                    <button type="submit" disabled={isSubmitting}>Crear Branch</button>
+                    <div className='move'>
+                        <button className='createinfo-relations' type="submit" disabled={isSubmitting}>Crear Branch</button>
+                    </div>
+
                 </form>
             </div>
             <Footer />

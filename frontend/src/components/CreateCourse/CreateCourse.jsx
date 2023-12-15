@@ -129,32 +129,32 @@ const CreateCourse = () => {
                                 </div>
                             )}
 
-                            <div className='formeditc'>
+                            <div className='formcourses'>
                                 <label className='instrutions'>Nombre del Curso:</label>
                                 <input className='datacourse' type="text" name="name" value={name} onChange={handleChange} placeholder='nombre del curso' />
                             </div>
 
-                            <div className='formeditc'>
+                            <div className='formcourses'>
                                 <label className='instrutions'>Descripcion del Curso:</label>
                                 <input className='datacourse' type="text" name="description" value={description} onChange={handleChange} placeholder='Descripción del curso, informacion' />
                             </div>
 
-                            <div className='formeditc'>
+                            <div className='formcourses'>
                                 <label className='instrutions'>Dia de matricula:</label>
                                 <input className='datacourse' type="date" name="registrationDay" value={registrationDay} onChange={handleChange} placeholder='dia de matricula' />
                             </div>
 
-                            <div className='formeditc'>
+                            <div className='formcourses'>
                                 <label className='instrutions'>Nombre de la Institucion:</label>
                                 <input className='datacourse' type="text" name="instiName" value={instiName} onChange={handleChange} placeholder='nombre de la institucion' />
                             </div>
 
-                            <div className='formeditc'>
+                            <div className='formcourses'>
                                 <label className='instrutions'>Requisitos:</label>
                                 <input className='datacourse' type="text" name="requirement" value={requirement} onChange={handleChange} placeholder='requerimientos ' />
                             </div>
 
-                            <div className='formeditc'>
+                            <div className='formcourses'>
                                 <label className='instrutions'>Favorito:</label>
                                 <select type="text" name="favorite" value={favorite} onChange={handleChange}>
                                     <option value={true}>Yes</option>
@@ -162,7 +162,9 @@ const CreateCourse = () => {
                                 </select>
                             </div>
 
-                            <button className='createcourse' type="submit">Crear curso</button>
+                            <div className='move'>
+                                <button className='createcourse' type="submit">Crear curso</button>
+                            </div>
                         </div>
                     </div>
                 </form>

@@ -12,6 +12,15 @@
     cursor: pointer;
 }
 
+.createcourse:hover {
+    box-shadow: 10px 10px 10px #44126b;
+}
+
+.move {
+    display: flex;
+    justify-content: center;
+}
+
 select {
     width: 10%;
 }

@@ -36,7 +36,7 @@ const CreateCategory = () => {
       if (response.ok) {
         alert("Categoría creada exitosamente");
         setErrorMessages([]); // Clear error messages on success
-        navigate('/create-category-courses'); 
+        navigate('/create-category-courses');
       } else {
         if (response.status === 422) {
           const errorData = await response.json();
@@ -72,8 +72,8 @@ const CreateCategory = () => {
             </div>
           )}
 
-          <div>
-            <label htmlFor="name">Nombre de la Categoría:</label>
+          <div className='from-infoofcourse'>
+            <label className='instrutions' htmlFor="name">Nombre de la Categoría:</label>
             <input
               type="text"
               id="name"
@@ -83,7 +83,7 @@ const CreateCategory = () => {
             />
           </div>
 
-          <button type="submit">Crear Categoría</button>
+          <button className='createinfo-relations' type="submit">Crear Categoría</button>
         </form>
       </div>
       <Footer />

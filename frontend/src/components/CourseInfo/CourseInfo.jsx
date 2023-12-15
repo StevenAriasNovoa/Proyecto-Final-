@@ -7,6 +7,7 @@ import Spinner from '../Spinner/Spinner.jsx';
 import Sidebar from '../SideBard/Sidebard.jsx';
 import Footer from '../Footer/Footer.jsx';
 import "./CourseInfo.css"
+import { getCourseForId } from '../../apis/CourseApi.jsx';
 
 const CourseInfo = () => {
   const { selectedId } = useParams();
@@ -19,79 +20,84 @@ const CourseInfo = () => {
   useEffect(() => {
     const fetchDataShow = async () => {
       try {
-        const url = `http://localhost:3001/api/v1/courses/${selectedId}`;
-        const response = await fetch(url);
-        const coursedata = await response.json();
+        // Get course information for the selected ID
+        const coursedata = await getCourseForId(selectedId);
         setCourseContent(coursedata);
 
+        // Get and set the institution name
         if (coursedata.course && coursedata.course.institution_id) {
           const institutionData = await fetchInstitutionName(coursedata.course.institution_id);
           setInstitutionName(institutionData.name);
         } else {
-          setInstitutionName("Nombre no disponible");
+          setInstitutionName("Name not available");
         }
 
-        // constante con los datos de la direccion del nombre de cada course , api mulada en branchApi.jsx
+        // Get and set course addresses data
         const addressesData = await fetchCourseAddresses(selectedId);
         setAddressesContent(addressesData);
 
-        // constante con los datos de la sucursal del nombre de cada course , api modulada en branchApi.jsx
+        // Get and set course branches data
         const branchesData = await fetchCourseBranches(selectedId);
         setBranchesContent(branchesData);
 
       } catch (error) {
+        // Handle errors: log to console and set course content to empty
         console.error('Error fetching data:', error);
         setCourseContent([]);
       } finally {
+        // Regardless of errors or not, set isLoading to false
         setIsLoading(false);
       }
     };
 
-    fetchDataShow();
+    fetchDataShow(); // Call the function to get data when the component mounts or selectedId changes
   }, [selectedId]);
 
-  if (isLoading) { // Show spinner while data is being fetched
-    return <div>
-      <Sidebar />
-      <Spinner />
-      <Footer />
-    </div>;
+  // If data is still being loaded, show the Spinner
+  if (isLoading) {
+    return (
+      <div>
+        <Sidebar />
+        <Spinner />
+        <Footer />
+      </div>
+    );
   }
 
+  // Render the course content if not loading
   return (
     <>
       <div className="main-container">
         <Sidebar />
         <div className="content-container">
-          <div key={courseContent?.course.id} className="text-center">
-          <div className='flex'>
-            <div id='boxid'>{courseContent?.course.id}</div>
-            <h2 id='namecourse' >{courseContent?.course.name || "nombre de curso no disponible"}</h2>
-          </div>
-            <div className='course-information'>
-              <h2>{courseContent?.course.description || "descripcion del curso no disponible"}</h2>
-            </div>
+          {courseContent && courseContent.course && (
+            <div key={courseContent.course.id} className="text-center">
+              <div className='flex'>
+                <div id='boxid'>{courseContent?.course.id}</div>
+                <h2 id='namecourse' >{courseContent?.course.name || "Name of course not available"}</h2>
+              </div>
+              <div className='course-information'>
+                <h2>{courseContent?.course.description || "Course description not available"}</h2>
+              </div>
 
-            <p className='information'>Fecha de inscripcion {courseContent?.course.registration_day || "fecha no disponible"}</p>
-            <p className='information'>Brindado por {institutionName || 'Nombre no disponible'}</p>
-            <p className='information'>Brindado en la sucursal </p>
-            <ul>
+              <p className='information'>Registration date {courseContent?.course.registration_day || "Date not available"}</p>
+              <p className='information'>Provided by {institutionName || 'Name not available'}</p>
+
               {branchesContent.map((branch, index) => (
-                <li key={index} className='branches-list'>
-                  <p>{branch.name}</p>
-                </li>
+                <p key={index} className='branches-list'>
+                  <p className='information'>at branch: {branch.name}</p>
+                </p>
               ))}
-            </ul>
 
-            <h2>Direccion:</h2>
-            <ul>
-              {addressesContent.map((address, index) => (
-                <li key={index} className='addresses-list'>
-                  {`Dirección: ${[address.province, address.canton, address.district, address.neighborhood, address.zip_code].join(', ')}`}
-                </li>
-              ))}
-            </ul>
-          </div>
+              <ul>
+                {addressesContent.map((address, index) => (
+                  <li key={index} className='addresses-list'>
+                    {`Address: ${[address.province, address.canton, address.district, address.neighborhood, address.zip_code].join(', ')}`}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       </div>
       <Footer />

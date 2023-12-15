@@ -1,5 +1,5 @@
 import React from "react";
-import User from "../User/User";
+import User from "../User/User.jsx";
 import "./Profile.css"
 
 function Profile() {

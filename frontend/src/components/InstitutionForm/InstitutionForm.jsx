@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import FlashMessage from 'react-flash-message'
 import Sidebar from '../SideBard/Sidebard';
 import Footer from '../Footer/Footer';
+import "./InstitutionForm.css";
 
 const InstitutionForm = ({ onInstitutionSubmit }) => {
     const navigate = useNavigate();
@@ -21,12 +21,6 @@ const InstitutionForm = ({ onInstitutionSubmit }) => {
     const handleTypeChange = (selectedType) => {
         setFormData({ ...formData, insti_type: selectedType });
     };
-
-    const Message = () => (
-        <FlashMessage duration={5000}>
-            <strong>Institucion creada exitosamente</strong>
-        </FlashMessage>
-    )
 
     const validateForm = () => {
         const newErrors = {};
@@ -67,7 +61,7 @@ const InstitutionForm = ({ onInstitutionSubmit }) => {
             });
 
             if (response.ok) {
-                Message();
+                alert("institucion creada exitosamente");
                 navigate("/create-course");
             } else {
                 if (response.status === 422) {
@@ -100,9 +94,10 @@ const InstitutionForm = ({ onInstitutionSubmit }) => {
             <div className='main-container'>
                 <Sidebar />
                 <form onSubmit={handleSubmit}>
-                    <div>
-                        <label htmlFor="name">Nombre de la Institución:</label>
+                    <div className='from-infoofcourse'>
+                        <label className='instrutions' htmlFor="name">Nombre de la Institución:</label>
                         <input
+                            className='datarelations'
                             type="text"
                             id="name"
                             name="name"
@@ -112,8 +107,8 @@ const InstitutionForm = ({ onInstitutionSubmit }) => {
                         {errors.name && <p className="error-message">{errors.name}</p>}
                     </div>
 
-                    <div>
-                        <label htmlFor="type">Tipo de Institución:</label>
+                    <div className='from-infoofcourse'>
+                        <label className='instrutions' htmlFor="type">Tipo de Institución:</label>
                         <select
                             id="type"
                             name="type"
@@ -128,7 +123,9 @@ const InstitutionForm = ({ onInstitutionSubmit }) => {
                         {errors.insti_type && <p className="error-message">{errors.insti_type}</p>}
                     </div>
 
-                    <button type="submit">Agregar Institución</button>
+                    <div className='move'> 
+                    <button className='createinfo-relations' type="submit">Agregar Institución</button>
+                    </div>
                 </form>
             </div>
             <Footer />

@@ -83,8 +83,8 @@ const CreateAddresses = () => {
                         </div>
                     )}
 
-                    <div>
-                        <label htmlFor='province'>Province:</label>
+                    <div className='from-infoofcourse'>
+                        <label className='instrutions' htmlFor='province'>Province:</label>
                         <input
                             type='text'
                             id='province'
@@ -94,8 +94,8 @@ const CreateAddresses = () => {
                         />
                     </div>
 
-                    <div>
-                        <label htmlFor='canton'>Canton:</label>
+                    <div className='from-infoofcourse'>
+                        <label className='instrutions' htmlFor='canton'>Canton:</label>
                         <input
                             type='text'
                             id='canton'
@@ -105,8 +105,8 @@ const CreateAddresses = () => {
                         />
                     </div>
 
-                    <div>
-                        <label htmlFor='district'>District:</label>
+                    <div className='from-infoofcourse'>
+                        <label className='instrutions' htmlFor='district'>District:</label>
                         <input
                             type='text'
                             id='district'
@@ -116,8 +116,8 @@ const CreateAddresses = () => {
                         />
                     </div>
 
-                    <div>
-                        <label htmlFor='neighborhood'>Neighborhood:</label>
+                    <div className='from-infoofcourse'>
+                        <label className='instrutions' htmlFor='neighborhood'>Neighborhood:</label>
                         <input
                             type='text'
                             id='neighborhood'
@@ -127,8 +127,8 @@ const CreateAddresses = () => {
                         />
                     </div>
 
-                    <div>
-                        <label htmlFor='zipCode'>Zip Code:</label>
+                    <div className='from-infoofcourse'>
+                        <label className='instrutions' htmlFor='zipCode'>Zip Code:</label>
                         <input
                             type='text'
                             id='zip_code'
@@ -138,7 +138,9 @@ const CreateAddresses = () => {
                         />
                     </div>
 
-                    <button type='submit'>Crear Ubicación</button>
+                    <div className='move'>
+                    <button className='createinfo-relations' type='submit'>Crear Ubicación</button>
+                    </div>
                 </form>
             </div>
             <Footer />
