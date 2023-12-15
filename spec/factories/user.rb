@@ -1,8 +1,9 @@
+
 FactoryBot.define do 
     factory :user do
         name { "Nombre de ejemplo" }
-        birthdate { 19900101 }
-        email { "example@gmail.com" }
+        birthdate { Date.new(1990, 1, 1) }
+        sequence(:email) { |n| "user#{n}@example.com" }
         password { 'password123' }
         encrypted_password { Devise.friendly_token }
         reset_password_token { nil }

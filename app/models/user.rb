@@ -1,9 +1,8 @@
 class User < ApplicationRecord
   include Devise::JWT::RevocationStrategies::JTIMatcher
-  rolify
+  # rolify
 
   devise :database_authenticatable, :registerable,
-        :recoverable, :validatable,
         :jwt_authenticatable, jwt_revocation_strategy: JwtDenylist
 
   validates_presence_of :name
@@ -11,7 +10,7 @@ class User < ApplicationRecord
 
   validates_presence_of :email
   validates_uniqueness_of :email, case_sensitive: false
-  validates_format_of :email, with: URI::MailTo::EMAIL_REGEXP
+  validates_format_of :email, with: /\A([^\s"@<>]+@[^\s"@<>]+\.[^\s"@<>]+)\z/
 
   validates_presence_of :birthdate
 

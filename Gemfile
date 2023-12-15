@@ -15,6 +15,12 @@ gem 'rack-cors'
 gem 'devise-jwt'
 gem 'pry-byebug', '~> 3.10', '>= 3.10.1'
 gem 'dotenv-rails', groups: [:development, :test]
+
+group :development do
+  gem 'listen'
+  # ... otras gemas de desarrollo
+end
+
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 
